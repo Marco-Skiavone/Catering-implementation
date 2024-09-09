@@ -1,7 +1,7 @@
 package catering.businesslogic.jobs;
 
-import catering.businesslogic.UseCaseLogicException;
 import catering.businesslogic.recipe.Task;
+import catering.businesslogic.shift.AbstractShift;
 import catering.businesslogic.user.Cook;
 
 public class Job implements Comparable<Job> {
@@ -12,12 +12,14 @@ public class Job implements Comparable<Job> {
     private int portions;
     private boolean done;
     private Cook worker;
+    private AbstractShift onShift;
 
     public Job(Task t) {
         this.task = t;
         this.eta = -1;
         this.portions = -1;
         this.done = false;
+        this.onShift = null;
     }
 
     public void modifyJob(Integer eta, Integer portions, Boolean done) {
@@ -37,7 +39,6 @@ public class Job implements Comparable<Job> {
         this.worker = null;
     }
 
-    /** Implementing compareTo method for Comparable<Job> */
     @Override
     public int compareTo(Job otherJob) {
         return Integer.compare(this.eta, otherJob.eta);
@@ -81,5 +82,13 @@ public class Job implements Comparable<Job> {
 
     public void setWorker(Cook worker) {
         this.worker = worker;
+    }
+
+    public AbstractShift getOnShift() {
+        return onShift;
+    }
+
+    public void setOnShift(AbstractShift onShift) {
+        this.onShift = onShift;
     }
 }
