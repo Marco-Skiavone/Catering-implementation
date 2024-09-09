@@ -7,3 +7,9 @@ catering_nofx/.idea
 catering_nofx/.idea/*
 catering_nofx/java/.idea
 catering_nofx/java/.idea/*
+
+catering_nofx/java/catering/target
+catering_nofx/java/catering/target/*
+
+*/desktop.ini
+
