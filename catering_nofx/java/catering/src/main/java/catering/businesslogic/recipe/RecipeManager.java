@@ -3,9 +3,9 @@ package catering.businesslogic.recipe;
 import java.util.ArrayList;
 
 public class RecipeManager {
-    ArrayList<Task> jobs;
+    ArrayList<Task> tasks;
     public RecipeManager() {
-        this.jobs = Recipe.loadAllRecipes();
+        this.tasks = Recipe.loadAllRecipes();
     }
 
     public ArrayList<Task> getRecipes() {

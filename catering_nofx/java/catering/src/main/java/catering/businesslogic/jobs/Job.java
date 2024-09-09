@@ -1,40 +1,38 @@
 package catering.businesslogic.jobs;
 
+import catering.businesslogic.UseCaseLogicException;
+import catering.businesslogic.recipe.Task;
+import catering.businesslogic.user.Cook;
+
 public class Job implements Comparable<Job> {
 
+    private Task task;
     /* Estimated Time of Arrival */
-    private int eta;
+    private int eta;        /* saved as minutes */
     private int portions;
     private boolean done;
     private Cook worker;
 
-    // Constructor (Based on 'create' method)
-    public Job(Task t, Integer eta, Integer portions, Boolean done) {
-        // Assuming Task has some functionality that would provide eta, portions, done if null.
-        this.eta = (eta != null) ? eta : t.getDefaultEta();
-        this.portions = (portions != null) ? portions : t.getDefaultPortions();
-        this.done = (done != null) ? done : false;
+    public Job(Task t) {
+        this.task = t;
+        this.eta = -1;
+        this.portions = -1;
+        this.done = false;
     }
 
-    // Method to modify a job
     public void modifyJob(Integer eta, Integer portions, Boolean done) {
-        if (eta != null) {
+        if (eta != null)
             this.eta = eta;
-        }
-        if (portions != null) {
+        if (portions != null)
             this.portions = portions;
-        }
-        if (done != null) {
+        if (done != null)
             this.done = done;
-        }
     }
 
-    /** Method to check if a worker has been assigned */
     public boolean isAssigned() {
         return this.worker != null;
     }
 
-    /** Method to remove the assignment of a cook */
     public void removeAssignment() {
         this.worker = null;
     }
@@ -45,7 +43,14 @@ public class Job implements Comparable<Job> {
         return Integer.compare(this.eta, otherJob.eta);
     }
 
-    /** Getters and Setters for eta, portions, and done (optional) */
+    public Task getTask() {
+        return task;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
+    }
+
     public int getEta() {
         return eta;
     }
@@ -78,19 +83,3 @@ public class Job implements Comparable<Job> {
         this.worker = worker;
     }
 }
-
-class Task {
-    public int getDefaultEta() {
-        return 0; // Placeholder value
-    }
-
-    public int getDefaultPortions() {
-        return 1; // Placeholder value
-    }
-}
-
-// Assuming there's a Cook class (this was referenced in the diagram)
-class Cook {
-    // Cook-related attributes and methods
-}
-

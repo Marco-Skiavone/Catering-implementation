@@ -1,6 +1,7 @@
 package catering.businesslogic.menu;
 
 import catering.businesslogic.recipe.Recipe;
+import catering.businesslogic.recipe.Task;
 import catering.persistence.BatchUpdateHandler;
 import catering.persistence.PersistenceManager;
 import catering.persistence.ResultHandler;
@@ -117,7 +118,7 @@ public class MenuItem {
 
         // carico qui le ricette perché non posso innestare due connessioni al DB
         for (int i = 0; i < result.size(); i++) {
-            result.get(i).itemRecipe = Recipe.loadRecipeById(recids.get(i));
+            result.get(i).itemRecipe = Task.loadRecipeById(recids.get(i));
         }
 
         return result;

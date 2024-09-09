@@ -18,7 +18,7 @@ public class Task {
     private String[] notes;
     private ArrayList<Preparation> ingredients;
 
-    private Task() {
+    protected Task() {
         ingredients = new ArrayList<>();
     }
 
@@ -80,19 +80,20 @@ public class Task {
         return new ArrayList<>(all.values());
     }
 
-    public static Task loadRecipeById(int id) {
-        if (all.containsKey(id)) return all.get(id);
-        Recipe rec = new Recipe();
+    public static Recipe loadRecipeById(int id) {
+        if (all.get(id) instanceof Recipe )
+            return (Recipe) all.get(id);
+        Recipe rep = new Recipe();
         String query = "SELECT * FROM Recipes WHERE id = " + id;
         PersistenceManager.executeQuery(query, new ResultHandler() {
             @Override
             public void handle(ResultSet rs) throws SQLException {
-                rec.name = rs.getString("name");
-                rec.id = id;
-                all.put(rec.id, rec);
+                rep.setName(rs.getString("name"));
+                rep.setId(id);
+                all.put(rep.getId(), rep);
             }
         });
-        return rec;
+        return rep;
     }
 
     public void setId(int id) {

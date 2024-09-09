@@ -19,6 +19,10 @@ public class Recipe extends Task {
         this.author = author;
     }
 
+    public Recipe() {
+        super();
+    }
+
     public String getAuthor() {
         return author;
     }
