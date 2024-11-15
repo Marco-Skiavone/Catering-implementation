@@ -1,9 +1,8 @@
 package catering.businesslogic.user;
 
-public class Chef extends User {
-    public Chef(int id, String username) {
-        super.id = id;
-        super.username = username;
+public class Chef extends Role {
+    public Chef(User component) {
+        super(component);
     }
 
     @Override

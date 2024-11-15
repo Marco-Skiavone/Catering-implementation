@@ -1,9 +1,8 @@
 package catering.businesslogic.user;
 
-public class Organizer extends User {
-    public Organizer(int id, String username) {
-        super.id = id;
-        super.username = username;
+public class Organizer extends Role {
+    public Organizer(User component) {
+        super(component);
     }
 
     @Override

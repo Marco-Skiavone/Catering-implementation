@@ -1,8 +1,8 @@
 package catering.businesslogic.user;
 
 public class Cook extends Staff {
-    public Cook(int id, String username) {
-        super(id, username);
+    public Cook(User component) {
+        super(component);
     }
 
     @Override
