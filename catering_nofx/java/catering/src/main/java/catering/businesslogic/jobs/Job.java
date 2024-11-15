@@ -5,7 +5,7 @@ import catering.businesslogic.shift.AbstractShift;
 import catering.businesslogic.user.Cook;
 
 public class Job implements Comparable<Job> {
-
+    private int id;
     private Task task;
     /* Estimated Time of Arrival */
     private int eta;        /* saved as minutes */
@@ -15,6 +15,7 @@ public class Job implements Comparable<Job> {
     private AbstractShift onShift;
 
     public Job(Task t) {
+        id = t.hashCode() + this.hashCode();
         this.task = t;
         this.eta = -1;
         this.portions = -1;
@@ -50,6 +51,14 @@ public class Job implements Comparable<Job> {
 
     public void setTask(Task task) {
         this.task = task;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getEta() {

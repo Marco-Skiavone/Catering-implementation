@@ -19,5 +19,5 @@ public class KitchenShift extends AbstractShift {
     public void setLocation(String location) {
         this.location = location;
     }
-    
+
 }
