@@ -1,16 +1,23 @@
 package catering.businesslogic.jobs;
 
+import catering.businesslogic.UseCaseLogicException;
 import catering.businesslogic.event.*;
+import catering.businesslogic.recipe.*;
 import catering.businesslogic.user.*;
+import catering.businesslogic.shift.*;
 import java.util.*;
 
 public class JobManager {
     private JobsSheet currentSheet;
-    private HashSet<JobsEventReceiver> eventReceivers;
+    private final HashSet<JobsEventReceiver> eventReceivers;
+    private final UserManager usrMgr;
+    private final ShiftManager shfMgr;
 
     public JobManager() {
         eventReceivers = new HashSet<>();
         currentSheet = null;
+        usrMgr = new UserManager();
+        shfMgr = new ShiftManager();
     }
 
     public JobsSheet getCurrentSheet() {
@@ -27,10 +34,102 @@ public class JobManager {
 
     // --- Operation methods ---
 
-    public void createJobsSheet(JobsSheet sheet) {
-        // @todo [...]
+    public void createJobsSheet(Service srv) {
+        User usr = usrMgr.getCurrentUser();
+        if (srv == null) throw new IllegalArgumentException();
+        if (!usr.isChef())
+            throw new UseCaseLogicException("Logged user is not a Chef!");
+        if (!srv.isAssigned(usr))
+            throw new SheetException("User is not assigned to the service!");
+        this.currentSheet = new JobsSheet(srv);
+        srv.setSummary(this.currentSheet);
+        notifyJobsSheetCreated(srv, this.currentSheet);
     }
 
+    public void modifySheet(JobsSheet sheet) {
+        User usr = usrMgr.getCurrentUser();
+        if (sheet == null) throw new IllegalArgumentException();
+        if (!usr.isChef())
+            throw new UseCaseLogicException("Logged user is not a Chef!");
+        if (!sheet.getService().isAssigned(usr))
+            throw new SheetException("User is not assigned to the service!");
+        this.currentSheet = sheet;
+    }
+
+    public void deleteSheet(Service srv) {
+        User usr = usrMgr.getCurrentUser();
+        if (srv == null) throw new IllegalArgumentException();
+        if (!usr.isChef())
+            throw new UseCaseLogicException("Logged user is not a Chef!");
+        if (!srv.isAssigned(usr))
+            throw new SheetException("User is not assigned to the service!");
+        if(srv.isExecuting())
+            throw new SheetException("Service is executing!");
+        JobsSheet sheet = srv.removeSummary();
+        if (sheet == null) throw new NullPointerException();
+        sheet.removeAllJobs();
+        notifyJobsSheetDeleted(srv);
+    }
+
+    public Job insertJob(Task t) {
+        if (t == null) throw new IllegalArgumentException();
+        if (this.currentSheet == null) throw new SheetException("Sheet not selected!");
+        Job j0 = currentSheet.addJob(t);
+        notifyJobAdded(currentSheet, j0);
+        t.getIngredients().forEach(prep -> notifyJobAdded(currentSheet, currentSheet.addJob(prep)));
+        return j0;
+    }
+
+    public Job modifyJob(Job j, Integer eta, Integer port) {
+        return modifyJob(j, eta, port, null);
+    }
+
+    public Job modifyJob(Job j, Boolean done) {
+        return modifyJob(j, null, null, done);
+    }
+
+    public Job modifyJob(Job j, Integer eta, Integer port, Boolean done) {
+        // User has already retrieved the job from the currentSheet.
+        if (this.currentSheet == null) throw new SheetException("Sheet not selected!");
+        if (!j.isDone()) {
+            j.modifyJob(eta, port, done);
+            notifyJobModified(currentSheet, j);
+        } else throw new SheetException("Job is already done!");
+        return j;
+    }
+
+    public void removeJob(Job j) {
+        if (j == null) throw new IllegalArgumentException();
+        if (this.currentSheet == null) throw new SheetException("Sheet not selected!");
+        if (!j.isDone()) {
+            currentSheet.removeJob(j);
+            notifyJobDeleted(currentSheet, j);
+        } else throw new SheetException("Job is already done!");
+    }
+
+    public ShiftTable getShiftTable() {
+        return shfMgr.getShiftTable();
+    }
+
+    public void setWorker(Job j, User usr) {
+        if (j == null || usr == null) throw new IllegalArgumentException();
+        if (this.currentSheet == null) throw new SheetException("Sheet not selected!");
+
+        // NB: in the following line, "usr.isCook()" could be "usr.isStaff()"
+        if (j.isDone() || j.isAssigned() || j.getOnShift() == null || !usr.isCook())
+            throw new UseCaseLogicException("Exception inside setWorker method!");
+        j.setWorker(usr);   // it can throw an Exception.
+        notifyJobAssigned(currentSheet, j);
+    }
+
+    public void removeAssignment(Job j) {
+        if (j == null) throw new IllegalArgumentException();
+        if (currentSheet == null) throw new SheetException("Sheet not selected!");
+        if (j.isDone() || !j.isAssigned())
+            throw new UseCaseLogicException("Exception inside setWorker method!");
+        User usr = j.removeAssignment();
+        notifyAssignmentDeleted(j, usr);
+    }
 
     // --- Event sender Methods ---
 
@@ -58,7 +157,7 @@ public class JobManager {
         eventReceivers.forEach(er -> er.updateJobsSheetDeleted(srv));
     }
 
-    private void notifyJobsAdded(JobsSheet js, Job j) {
+    private void notifyJobAdded(JobsSheet js, Job j) {
         eventReceivers.forEach(er -> er.updateJobsAdded(js, j));
     }
 

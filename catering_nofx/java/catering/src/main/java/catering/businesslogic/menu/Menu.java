@@ -378,6 +378,11 @@ public class Menu {
         });
     }
 
+    public ArrayList<MenuItem> getAllMenuItems() {
+        ArrayList<MenuItem> returnable = new ArrayList<>(freeItems);
+        sections.forEach(el -> returnable.addAll(el.getItems()));
+        return returnable;
+    }
 
     public static void deleteMenu(Menu m) {
         // delete sections

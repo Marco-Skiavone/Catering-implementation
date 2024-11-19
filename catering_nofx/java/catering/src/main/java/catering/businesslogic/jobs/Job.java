@@ -1,8 +1,9 @@
 package catering.businesslogic.jobs;
 
-import catering.businesslogic.recipe.Task;
-import catering.businesslogic.shift.AbstractShift;
-import catering.businesslogic.user.Cook;
+import catering.businesslogic.UseCaseLogicException;
+import catering.businesslogic.recipe.*;
+import catering.businesslogic.shift.*;
+import catering.businesslogic.user.*;
 
 public class Job implements Comparable<Job> {
     private int id;
@@ -11,7 +12,7 @@ public class Job implements Comparable<Job> {
     private int eta;        /* saved as minutes */
     private int portions;
     private boolean done;
-    private Cook worker;
+    private User worker;
     private AbstractShift onShift;
 
     public Job(Task t) {
@@ -36,8 +37,10 @@ public class Job implements Comparable<Job> {
         return this.worker != null;
     }
 
-    public void removeAssignment() {
+    public User removeAssignment() {
+        User removed = this.worker;
         this.worker = null;
+        return removed;
     }
 
     @Override
@@ -85,12 +88,14 @@ public class Job implements Comparable<Job> {
         this.done = done;
     }
 
-    public Cook getWorker() {
+    public User getWorker() {
         return worker;
     }
 
-    public void setWorker(Cook worker) {
-        this.worker = worker;
+    public void setWorker(User worker) throws UseCaseLogicException {
+        if (this.onShift.isWorkerAvailableIn(worker))
+            this.worker = worker;
+        else throw new UseCaseLogicException("Worker not available in selected shift!");
     }
 
     public AbstractShift getOnShift() {

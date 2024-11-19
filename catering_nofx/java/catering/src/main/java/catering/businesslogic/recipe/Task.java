@@ -80,6 +80,10 @@ public class Task {
         return new ArrayList<>(all.values());
     }
 
+    public ArrayList<Preparation> getIngredients() {
+        return new ArrayList<>(ingredients);
+    }
+
     public static Recipe loadRecipeById(int id) {
         if (all.get(id) instanceof Recipe )
             return (Recipe) all.get(id);
