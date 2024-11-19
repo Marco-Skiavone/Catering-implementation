@@ -114,11 +114,11 @@ public class JobManager {
     public void setWorker(Job j, User usr) {
         if (j == null || usr == null) throw new IllegalArgumentException();
         if (this.currentSheet == null) throw new SheetException("Sheet not selected!");
-
-        // NB: in the following line, "usr.isCook()" could be "usr.isStaff()"
         if (j.isDone() || j.isAssigned() || j.getOnShift() == null || !usr.isCook())
             throw new UseCaseLogicException("Exception inside setWorker method!");
-        j.setWorker(usr);   // it can throw an Exception.
+        // NB: in the previous lines, "usr.isCook()" could be "usr.isStaff()"
+
+        j.setWorker(usr);   // It can throw an Exception.
         notifyJobAssigned(currentSheet, j);
     }
 
@@ -129,6 +129,13 @@ public class JobManager {
             throw new UseCaseLogicException("Exception inside setWorker method!");
         User usr = j.removeAssignment();
         notifyAssignmentDeleted(j, usr);
+    }
+
+    public void sortJobsSheet(Comparator<Job> cmp) {
+        if (cmp == null) throw new IllegalArgumentException();
+        if (this.currentSheet == null) throw new SheetException("Sheet not selected!");
+        this.currentSheet.sortJobs(cmp);
+        notifyJobsSheetRearranged(currentSheet);
     }
 
     // --- Event sender Methods ---

@@ -59,15 +59,7 @@ public class JobsSheet {
         return service;
     }
 
-    public void moveJob(Job j, int pos) {
-
-    }
-
-    public void setWorker(Job job, Cook usr) {
-
-    }
-
     public void sortJobs(Comparator<Job> cmp) {
-
+        jobs.sort(cmp);
     }
 }
