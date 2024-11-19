@@ -16,8 +16,6 @@ public class JobsSheet {
                 Job j = new Job(elem.getItemRecipe());
                 jobs.put(j.getId(), j);
             }
-
-
     }
 
     public Job addJob(Task t) {     // wrapper
