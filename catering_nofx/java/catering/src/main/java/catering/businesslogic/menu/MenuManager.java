@@ -24,7 +24,7 @@ public class MenuManager {
         AbstractUser user = (AbstractUser)CatERing.getInstance().getUserManager().getCurrentUser();
 
         if (!user.isChef()) {
-            throw new UseCaseLogicException();
+            throw new UseCaseLogicException("User is not a chef.");
         }
 
         Menu m = new Menu(user, title, menuFeatures);
@@ -36,7 +36,7 @@ public class MenuManager {
 
     public Section defineSection(String name) throws UseCaseLogicException {
         if (currentMenu == null) {
-            throw new UseCaseLogicException();
+            throw new UseCaseLogicException("Menu not selected.");
         }
 
         Section sec = this.currentMenu.addSection(name);
@@ -47,8 +47,8 @@ public class MenuManager {
     }
 
     public MenuItem insertItem(Recipe recipe, Section sec, String desc) throws UseCaseLogicException {
-        if (this.currentMenu == null) throw new UseCaseLogicException();
-        if (sec != null && this.currentMenu.getSectionPosition(sec) < 0) throw new UseCaseLogicException();
+        if (this.currentMenu == null) throw new UseCaseLogicException("Menu not selected.");
+        if (sec != null && this.currentMenu.getSectionPosition(sec) < 0) throw new UseCaseLogicException("Exception in insertItem.");
         MenuItem mi = this.currentMenu.addItem(recipe, sec, desc);
         this.notifyMenuItemAdded(mi);
         return mi;
@@ -67,8 +67,8 @@ public class MenuManager {
     }
 
     public void setAdditionalFeatures(String[] features, boolean[] values) throws UseCaseLogicException {
-        if (this.currentMenu == null) throw new UseCaseLogicException();
-        if (features.length != values.length) throw new UseCaseLogicException();
+        if (this.currentMenu == null) throw new UseCaseLogicException("Menu not selected.");
+        if (features.length != values.length) throw new UseCaseLogicException("Features and values do not match.");
         for (int i = 0; i < features.length; i++) {
             this.currentMenu.setFeatureValue(features[i], values[i]);
         }
@@ -76,20 +76,20 @@ public class MenuManager {
     }
 
     public void changeTitle(String title) throws UseCaseLogicException {
-        if (currentMenu == null) throw new UseCaseLogicException();
+        if (currentMenu == null) throw new UseCaseLogicException("Menu not selected.");
         currentMenu.setTitle(title);
         this.notifyMenuTitleChanged();
     }
 
     public void publish() throws UseCaseLogicException {
-        if (currentMenu == null) throw new UseCaseLogicException();
+        if (currentMenu == null) throw new UseCaseLogicException("menu not selected.");
         currentMenu.setPublished(true);
         this.notifyMenuPublishedState();
     }
 
     public void deleteMenu(Menu m) throws UseCaseLogicException, MenuException {
         AbstractUser u = CatERing.getInstance().getUserManager().getCurrentUser();
-        if (!u.isChef()) throw new UseCaseLogicException();
+        if (!u.isChef()) throw new UseCaseLogicException("User is not a chef.");
         if (m.isInUse() || !m.isOwner(u)) {
             throw new MenuException();
         }
@@ -98,7 +98,7 @@ public class MenuManager {
 
     public void chooseMenu(Menu m) throws UseCaseLogicException, MenuException {
         AbstractUser u = CatERing.getInstance().getUserManager().getCurrentUser();
-        if (!u.isChef()) throw new UseCaseLogicException();
+        if (!u.isChef()) throw new UseCaseLogicException("User is not a chef.");
         if (m.isInUse() || !m.isOwner(u)) {
             throw new MenuException();
         }
@@ -107,10 +107,8 @@ public class MenuManager {
 
     public Menu copyMenu(Menu toCopy) throws UseCaseLogicException {
         AbstractUser user = CatERing.getInstance().getUserManager().getCurrentUser();
-
-        if (!user.isChef()) {
-            throw new UseCaseLogicException();
-        }
+        if (!user.isChef())
+            throw new UseCaseLogicException("User is not a chef.");
 
         Menu m = new Menu(user, toCopy);
         this.setCurrentMenu(m);
@@ -120,21 +118,21 @@ public class MenuManager {
     }
 
     public void deleteSection(Section s, boolean deleteItems) throws UseCaseLogicException {
-        if (currentMenu == null || currentMenu.getSectionPosition(s) < 0) throw new UseCaseLogicException();
+        if (currentMenu == null || currentMenu.getSectionPosition(s) < 0) throw new UseCaseLogicException("Exception in deleteSection.");
         this.currentMenu.removeSection(s, deleteItems);
 
         this.notifySectionDeleted(s, deleteItems);
     }
 
     public void changeSectionName(Section s, String name) throws UseCaseLogicException {
-        if (currentMenu == null || currentMenu.getSectionPosition(s) < 0) throw new UseCaseLogicException();
+        if (currentMenu == null || currentMenu.getSectionPosition(s) < 0) throw new UseCaseLogicException("Exception in changeSectionName.");
         s.setName(name);
 
         this.notifySectionChangedName(s);
     }
 
     public void moveSection(Section sec, int position) throws UseCaseLogicException {
-        if (currentMenu == null || currentMenu.getSectionPosition(sec) < 0) throw new UseCaseLogicException();
+        if (currentMenu == null || currentMenu.getSectionPosition(sec) < 0) throw new UseCaseLogicException("Exception in moveSection.");
         if (position < 0 || position >= currentMenu.getSectionCount()) throw new IllegalArgumentException();
         this.currentMenu.moveSection(sec, position);
 
@@ -147,13 +145,13 @@ public class MenuManager {
 
     public void moveMenuItem(MenuItem mi, Section sec, int position) throws UseCaseLogicException {
         if (sec == null) {
-            if (currentMenu == null || currentMenu.getFreeItemPosition(mi) < 0) throw new UseCaseLogicException();
+            if (currentMenu == null || currentMenu.getFreeItemPosition(mi) < 0) throw new UseCaseLogicException("Exception in move");
             if (position < 0 || position >= currentMenu.getFreeItemCount()) throw new IllegalArgumentException();
             currentMenu.moveFreeItem(mi, position);
             this.notifyFreeItemsRearranged();
         } else {
             if (currentMenu == null || currentMenu.getSectionPosition(sec) < 0 || sec.getItemPosition(mi) < 0)
-                throw new UseCaseLogicException();
+                throw new UseCaseLogicException("Exception in moveMenuItem.");
             if (position < 0 || position >= sec.getItemsCount()) throw new IllegalArgumentException();
             sec.moveItem(mi, position);
             this.notifySectionItemsRearranged(sec);
@@ -166,14 +164,14 @@ public class MenuManager {
 
     public void assignItemToSection(MenuItem mi, Section sec) throws UseCaseLogicException {
         // condiz 1: deve eserci un currentMenu
-        if (currentMenu == null) throw new UseCaseLogicException();
+        if (currentMenu == null) throw new UseCaseLogicException("Menu not selected.");
 
         // condiz 2: la sezione se specificata deve appartenere al current menu
-        if (sec != null && currentMenu.getSectionPosition(sec) < 0) throw new UseCaseLogicException();
+        if (sec != null && currentMenu.getSectionPosition(sec) < 0) throw new UseCaseLogicException("Exception in assignItemToSection.");
 
         // l'item deve appartenere al menu, o in una sezione o come voce libera
         Section oldsec = currentMenu.getSectionForItem(mi);
-        if (oldsec == null && currentMenu.getFreeItemPosition(mi) < 0) throw  new UseCaseLogicException();
+        if (oldsec == null && currentMenu.getFreeItemPosition(mi) < 0) throw  new UseCaseLogicException("Exception in assignItemToSection.");
 
         // spostamento non necessario
         if (sec == oldsec) return;
@@ -186,8 +184,8 @@ public class MenuManager {
     }
 
     public void editMenuItemDescription(MenuItem mi, String desc) throws UseCaseLogicException {
-        if (currentMenu == null) throw new UseCaseLogicException();
-        if (currentMenu.getSectionForItem(mi) == null && currentMenu.getFreeItemPosition(mi) < 0) throw new UseCaseLogicException();
+        if (currentMenu == null) throw new UseCaseLogicException("Menu not selected.");
+        if (currentMenu.getSectionForItem(mi) == null && currentMenu.getFreeItemPosition(mi) < 0) throw new UseCaseLogicException("Exception in editMenuItemDescription.");
 
         mi.setDescription(desc);
 
@@ -195,14 +193,14 @@ public class MenuManager {
     }
 
     public void deleteItem(MenuItem mi) throws  UseCaseLogicException {
-        if (currentMenu == null) throw new UseCaseLogicException();
+        if (currentMenu == null) throw new UseCaseLogicException("Menu not selected.");
         Section sec = null;
         try {
             sec = currentMenu.getSectionForItem(mi);
         } catch (IllegalArgumentException ex) {
             // se il menu mi dice che l'item non è valido
             // allora vuol dire che esso non appartiene al menu
-            throw new UseCaseLogicException();
+            throw new UseCaseLogicException("Exception in deleteItem.");
         }
         currentMenu.removeItem(mi);
         this.notifyItemDeleted(sec, mi);
