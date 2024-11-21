@@ -1,5 +1,8 @@
 package catering.persistence;
 
-public class UserPersistence {
-    // todo
+import catering.businesslogic.user.UserEventReceiver;
+
+public class UserPersistence implements UserEventReceiver {
+    // TODO
+
 }

@@ -59,6 +59,8 @@ public class CatERing {
         return userMgr;
     }
 
+    public JobManager getJobManager() { return jobMgr; }
+
     public EventManager getEventManager() { return eventMgr; }
 
     public ShiftManager getShiftManager() { return shiftMgr; }

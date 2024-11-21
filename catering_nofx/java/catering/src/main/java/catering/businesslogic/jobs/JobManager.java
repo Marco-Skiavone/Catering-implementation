@@ -144,14 +144,14 @@ public class JobManager {
     /**
      * @throws IllegalArgumentException if argument passed is null.
      * */
-    public void addReceiver(JobsEventReceiver er) {
+    public void addEventReceiver(JobsEventReceiver er) {
         if (er == null) throw new IllegalArgumentException("Null receiver passed!");
         eventReceivers.add(er);
     }
 
     /**
      * @throws IllegalArgumentException if argument passed is null or not present in the set. */
-    public void removeReceiver(JobsEventReceiver er) {
+    public void removeEventReceiver(JobsEventReceiver er) {
         if (er == null) throw new IllegalArgumentException("Null receiver passed!");
         if (!eventReceivers.remove(er))
             throw new IllegalArgumentException("Receiver does not exist!");
