@@ -35,14 +35,10 @@ public class MenuManager {
     }
 
     public Section defineSection(String name) throws UseCaseLogicException {
-        if (currentMenu == null) {
+        if (currentMenu == null)
             throw new UseCaseLogicException("Menu not selected.");
-        }
-
         Section sec = this.currentMenu.addSection(name);
-
         this.notifySectionAdded(this.currentMenu, sec);
-
         return sec;
     }
 
