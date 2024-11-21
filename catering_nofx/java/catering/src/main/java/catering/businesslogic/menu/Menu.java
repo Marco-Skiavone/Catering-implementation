@@ -2,7 +2,7 @@ package catering.businesslogic.menu;
 
 import catering.businesslogic.CatERing;
 import catering.businesslogic.recipe.Recipe;
-import catering.businesslogic.user.User;
+import catering.businesslogic.user.AbstractUser;
 import catering.persistence.BatchUpdateHandler;
 import catering.persistence.PersistenceManager;
 import catering.persistence.ResultHandler;
@@ -25,13 +25,13 @@ public class Menu {
     private ArrayList<MenuItem> freeItems;
     private ArrayList<Section> sections;
 
-    private User owner;
+    private AbstractUser owner;
 
     private Menu() {
         this.featuresMap = new HashMap<>();
     }
 
-    public Menu(User user, String title, String[] menuFeatures) {
+    public Menu(AbstractUser user, String title, String[] menuFeatures) {
         id = 0;
 
         if (title != null) {
@@ -52,7 +52,7 @@ public class Menu {
 
     }
 
-    public Menu(User owner, Menu m) {
+    public Menu(AbstractUser owner, Menu m) {
         this.id = 0;
         this.title = m.title;
         this.published = false;
@@ -193,7 +193,7 @@ public class Menu {
         return this.inUse;
     }
 
-    public boolean isOwner(User u) {
+    public boolean isOwner(AbstractUser u) {
         return u.getId() == this.owner.getId();
     }
 
@@ -433,7 +433,7 @@ public class Menu {
 
         for (int i = 0; i < newMenus.size(); i++) {
             Menu m = newMenus.get(i);
-            m.owner = User.loadUserById(newMids.get(i));
+            m.owner = AbstractUser.loadUserById(newMids.get(i));
 
             // load features
             String featQ = "SELECT * FROM MenuFeatures WHERE menu_id = " + m.id;
@@ -463,7 +463,7 @@ public class Menu {
 
         for (int i = 0; i < oldMenus.size(); i++) {
             Menu m = oldMenus.get(i);
-            m.owner = User.loadUserById(oldMids.get(i));
+            m.owner = AbstractUser.loadUserById(oldMids.get(i));
 
             // load features
             m.featuresMap.clear();

@@ -9,6 +9,6 @@ public interface JobsEventReceiver {
     void updateJobModified(JobsSheet js, Job j);
     void updateJobDeleted(JobsSheet js, Job j);
     void updateJobAssigned(JobsSheet js, Job j);
-    void updateAssignmentDeleted(Job j, User usr);
+    void updateAssignmentDeleted(Job j, AbstractUser usr);
     void updateJobsSheetRearranged(JobsSheet js);
 }

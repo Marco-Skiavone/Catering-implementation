@@ -1,18 +1,18 @@
 package catering.businesslogic.user;
 
-public class Role extends User {
-    private User component;
+public class Role extends AbstractUser {
+    private AbstractUser component;
 
-    public Role(User component) {
+    public Role(AbstractUser component) {
         if (component == null) throw new NullPointerException("component is null");
         this.component = component;
     }
 
-    public User getComponent() {
+    public AbstractUser getComponent() {
         return component;
     }
 
-    public void setComponent(User component) {
+    public void setComponent(AbstractUser component) {
         this.component = component;
     }
 

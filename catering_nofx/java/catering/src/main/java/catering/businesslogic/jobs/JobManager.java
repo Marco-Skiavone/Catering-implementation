@@ -1,5 +1,6 @@
 package catering.businesslogic.jobs;
 
+import catering.businesslogic.CatERing;
 import catering.businesslogic.UseCaseLogicException;
 import catering.businesslogic.event.*;
 import catering.businesslogic.recipe.*;
@@ -16,8 +17,8 @@ public class JobManager {
     public JobManager() {
         eventReceivers = new HashSet<>();
         currentSheet = null;
-        usrMgr = new UserManager();
-        shfMgr = new ShiftManager();
+        usrMgr = CatERing.getInstance().getUserManager();
+        shfMgr = CatERing.getInstance().getShiftManager();
     }
 
     public JobsSheet getCurrentSheet() {
@@ -35,7 +36,7 @@ public class JobManager {
     // --- Operation methods ---
 
     public void createJobsSheet(Service srv) {
-        User usr = usrMgr.getCurrentUser();
+        AbstractUser usr = usrMgr.getCurrentUser();
         if (srv == null) throw new IllegalArgumentException();
         if (!usr.isChef())
             throw new UseCaseLogicException("Logged user is not a Chef!");
@@ -47,7 +48,7 @@ public class JobManager {
     }
 
     public void modifySheet(JobsSheet sheet) {
-        User usr = usrMgr.getCurrentUser();
+        AbstractUser usr = usrMgr.getCurrentUser();
         if (sheet == null) throw new IllegalArgumentException();
         if (!usr.isChef())
             throw new UseCaseLogicException("Logged user is not a Chef!");
@@ -57,7 +58,7 @@ public class JobManager {
     }
 
     public void deleteSheet(Service srv) {
-        User usr = usrMgr.getCurrentUser();
+        AbstractUser usr = usrMgr.getCurrentUser();
         if (srv == null) throw new IllegalArgumentException();
         if (!usr.isChef())
             throw new UseCaseLogicException("Logged user is not a Chef!");
@@ -111,7 +112,7 @@ public class JobManager {
         return shfMgr.getShiftTable();
     }
 
-    public void setWorker(Job j, User usr) {
+    public void setWorker(Job j, AbstractUser usr) {
         if (j == null || usr == null) throw new IllegalArgumentException();
         if (this.currentSheet == null) throw new SheetException("Sheet not selected!");
         if (j.isDone() || j.isAssigned() || j.getOnShift() == null || !usr.isCook())
@@ -127,7 +128,7 @@ public class JobManager {
         if (currentSheet == null) throw new SheetException("Sheet not selected!");
         if (j.isDone() || !j.isAssigned())
             throw new UseCaseLogicException("Exception inside setWorker method!");
-        User usr = j.removeAssignment();
+        AbstractUser usr = j.removeAssignment();
         notifyAssignmentDeleted(j, usr);
     }
 
@@ -180,7 +181,7 @@ public class JobManager {
         eventReceivers.forEach(er -> er.updateJobAssigned(js, j));
     }
 
-    private void notifyAssignmentDeleted(Job j, User usr) {
+    private void notifyAssignmentDeleted(Job j, AbstractUser usr) {
         eventReceivers.forEach(er -> er.updateAssignmentDeleted(j, usr));
     }
 

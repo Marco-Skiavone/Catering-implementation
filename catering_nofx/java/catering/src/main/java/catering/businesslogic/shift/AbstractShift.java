@@ -1,7 +1,7 @@
 package catering.businesslogic.shift;
 
 import catering.businesslogic.user.Staff;
-import catering.businesslogic.user.User;
+import catering.businesslogic.user.AbstractUser;
 
 import java.time.*;
 import java.util.*;
@@ -67,7 +67,7 @@ public abstract class AbstractShift {
         this.availableWorkers = availableWorkers;
     }
 
-    public boolean isWorkerAvailableIn(User usr) {
+    public boolean isWorkerAvailableIn(AbstractUser usr) {
         if (availableWorkers == null || !usr.isStaff())
             return false;
         return availableWorkers.contains(usr);

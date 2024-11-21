@@ -6,7 +6,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import catering.businesslogic.user.User;
+import catering.businesslogic.user.AbstractUser;
 import catering.persistence.PersistenceManager;
 import catering.persistence.ResultHandler;
 
@@ -16,7 +16,7 @@ public class EventInfo implements EventItemInfo {
     private Date dateStart;
     private Date dateEnd;
     private int participants;
-    private User organizer;
+    private AbstractUser organizer;
 
     private ArrayList<ServiceInfo> services;
 
@@ -48,7 +48,7 @@ public class EventInfo implements EventItemInfo {
                 e.dateEnd = rs.getDate("date_end");
                 e.participants = rs.getInt("expected_participants");
                 int org = rs.getInt("organizer_id");
-                e.organizer = User.loadUserById(org);
+                e.organizer = AbstractUser.loadUserById(org);
                 all.add(e);
             }
         });

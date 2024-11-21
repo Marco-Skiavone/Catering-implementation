@@ -9,7 +9,7 @@ public class Service {
     String address;
     LocalDateTime startTime;
     LocalDateTime endTime;
-    User assignedChef;
+    AbstractUser assignedChef;
     JobsSheet summary;
     Menu menuInUse;
 
@@ -52,11 +52,11 @@ public class Service {
         return endTime;
     }
 
-    public void updateChef(User usr) {
+    public void updateChef(AbstractUser usr) {
         this.assignedChef = usr;
     }
 
-    public boolean isAssigned(User usr) {
+    public boolean isAssigned(AbstractUser usr) {
         return usr.equals(assignedChef);
     }
 

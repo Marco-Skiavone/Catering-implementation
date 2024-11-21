@@ -1,13 +1,13 @@
 package catering.businesslogic.user;
 
 public class UserManager {
-    private User currentUser;
+    private AbstractUser currentUser;
 
     public void fakeLogin(String username) {
-        this.currentUser = User.loadUser(username);
+        this.currentUser = AbstractUser.loadUser(username);
     }
 
-    public User getCurrentUser() {
+    public AbstractUser getCurrentUser() {
         return this.currentUser;
     }
 }

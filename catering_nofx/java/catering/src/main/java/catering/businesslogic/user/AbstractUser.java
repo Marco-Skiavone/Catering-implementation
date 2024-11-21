@@ -7,9 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public abstract class User {
+public abstract class AbstractUser {
 
-    private static Map<Integer, User> loadedUsers = new HashMap<Integer, User>();
+    private static Map<Integer, AbstractUser> loadedUsers = new HashMap<Integer, AbstractUser>();
 
     protected int id;
     protected String username;
@@ -30,31 +30,31 @@ public abstract class User {
 
     // STATIC METHODS FOR PERSISTENCE
 
-    public static User loadUserById(int uid) {
+    public static AbstractUser loadUserById(int uid) {
         if (loadedUsers.containsKey(uid))
             return loadedUsers.get(uid);
-        User u = new Worker();
+        AbstractUser u = new Worker();
         String userQuery = "SELECT * FROM Users WHERE id='"+uid+"'";
         PersistenceManager.executeQuery(userQuery, rs ->
                 u.setAll(rs.getInt("id"), rs.getString("username")));
         return decorateUser(u);
     }
 
-    public static User loadUser(String username) {
-        User u = new Worker();
+    public static AbstractUser loadUser(String username) {
+        AbstractUser u = new Worker();
         String userQuery = "SELECT * FROM Users WHERE username='"+username+"'";
         PersistenceManager.executeQuery(userQuery,
                 rs -> u.setAll(rs.getInt("id"), rs.getString("username")));
         return decorateUser(u);
     }
 
-    private static User decorateUser(User u) {
+    private static AbstractUser decorateUser(AbstractUser u) {
         if (u.id > 0) {
             String roleQuery = "SELECT * FROM UserRoles WHERE user_id=" + u.id;
             PersistenceManager.executeQuery(roleQuery, new ResultHandler() {
                 @Override
                 public void handle(ResultSet rs) throws SQLException {
-                    User decoratedUser = u;
+                    AbstractUser decoratedUser = u;
                     while (rs.next()) {
                         // "while" used to retrieve every role of a user
                         String role = rs.getString("role_id");
@@ -95,8 +95,8 @@ public abstract class User {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
+        if (!(o instanceof AbstractUser)) return false;
+        AbstractUser user = (AbstractUser) o;
         return getId() == user.getId() && Objects.equals(username, user.username);
     }
 }

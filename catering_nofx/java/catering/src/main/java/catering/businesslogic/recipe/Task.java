@@ -1,6 +1,6 @@
 package catering.businesslogic.recipe;
 
-import catering.businesslogic.user.User;
+import catering.businesslogic.user.AbstractUser;
 import catering.persistence.PersistenceManager;
 import catering.persistence.ResultHandler;
 
@@ -13,7 +13,7 @@ public class Task {
 
     private int id;
     private String name;
-    private User owner;
+    private AbstractUser owner;
     private String[] steps;
     private String[] notes;
     private ArrayList<Preparation> ingredients;
@@ -28,7 +28,7 @@ public class Task {
         this.name = name;
     }
 
-    public boolean isOwner(User user) {
+    public boolean isOwner(AbstractUser user) {
         // Implement logic to check if the user is the owner
         return owner != null && owner.equals(user); // Placeholder return value
     }

@@ -1,7 +1,7 @@
 package catering.businesslogic.user;
 
 public class Staff extends Role {
-    public Staff(User component) {
+    public Staff(AbstractUser component) {
         super(component);
     }
 

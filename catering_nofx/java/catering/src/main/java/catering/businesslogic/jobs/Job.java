@@ -12,7 +12,7 @@ public class Job implements Comparable<Job> {
     private int eta;        /* saved as minutes */
     private int portions;
     private boolean done;
-    private User worker;
+    private AbstractUser worker;
     private AbstractShift onShift;
 
     public Job(Task t) {
@@ -37,8 +37,8 @@ public class Job implements Comparable<Job> {
         return this.worker != null;
     }
 
-    public User removeAssignment() {
-        User removed = this.worker;
+    public AbstractUser removeAssignment() {
+        AbstractUser removed = this.worker;
         this.worker = null;
         return removed;
     }
@@ -88,11 +88,11 @@ public class Job implements Comparable<Job> {
         this.done = done;
     }
 
-    public User getWorker() {
+    public AbstractUser getWorker() {
         return worker;
     }
 
-    public void setWorker(User worker) throws UseCaseLogicException {
+    public void setWorker(AbstractUser worker) throws UseCaseLogicException {
         if (this.onShift.isWorkerAvailableIn(worker))
             this.worker = worker;
         else throw new UseCaseLogicException("Worker not available in selected shift!");

@@ -1,7 +1,7 @@
 package catering.businesslogic.user;
 
 public class Organizer extends Role {
-    public Organizer(User component) {
+    public Organizer(AbstractUser component) {
         super(component);
     }
 

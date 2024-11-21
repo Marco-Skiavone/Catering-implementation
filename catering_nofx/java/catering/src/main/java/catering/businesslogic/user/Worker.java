@@ -1,6 +1,6 @@
 package catering.businesslogic.user;
 
-public class Worker extends User {
+public class Worker extends AbstractUser {
 
     public Worker() {
         super.id = 0;

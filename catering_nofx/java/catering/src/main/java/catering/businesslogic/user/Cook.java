@@ -1,7 +1,7 @@
 package catering.businesslogic.user;
 
 public class Cook extends Staff {
-    public Cook(User component) {
+    public Cook(AbstractUser component) {
         super(component);
     }
 
