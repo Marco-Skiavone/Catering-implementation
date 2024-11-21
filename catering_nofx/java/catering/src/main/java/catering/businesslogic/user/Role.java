@@ -1,6 +1,6 @@
 package catering.businesslogic.user;
 
-public class Role extends AbstractUser {
+public abstract class Role extends AbstractUser {
     private AbstractUser component;
 
     public Role(AbstractUser component) {
@@ -14,6 +14,26 @@ public class Role extends AbstractUser {
 
     public void setComponent(AbstractUser component) {
         this.component = component;
+    }
+
+    @Override
+    public void setAll(int id, String username) {
+        component.setAll(id, username);
+    }
+
+    @Override
+    public String toString() {
+        return component.toString();
+    }
+
+    @Override
+    public String getUsername() {
+        return component.getUsername();
+    }
+
+    @Override
+    public int getId() {
+        return component.getId();
     }
 
     // Overriding methods:

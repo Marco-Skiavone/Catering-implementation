@@ -9,4 +9,9 @@ public class Chef extends Role {
     public boolean isChef() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Chef(" + getComponent().toString() + ")";
+    }
 }

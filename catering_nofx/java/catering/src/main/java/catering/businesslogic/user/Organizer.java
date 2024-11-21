@@ -10,4 +10,8 @@ public class Organizer extends Role {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "Organizer(" + getComponent().toString() + ")";
+    }
 }

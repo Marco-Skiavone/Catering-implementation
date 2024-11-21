@@ -1,22 +1,25 @@
 package catering.businesslogic.user;
 
 public class Worker extends AbstractUser {
+    private int id;
+    private String username;
 
     public Worker() {
-        super.id = 0;
-        super.username = "";
-    }
-
-    public Worker(int id, String username) {
-        super.id = id;
-        super.username = username;
+        this.id = 0;
+        this.username = "";
     }
 
     @Override
     public void setAll(int id, String username) {
-        super.id = id;
-        super.username = username;
+        this.id = id;
+        this.username = username;
     }
+
+    @Override
+    public int getId() {return this.id;}
+
+    @Override
+    public String getUsername() {return this.username;}
 
     @Override
     public boolean isChef() {

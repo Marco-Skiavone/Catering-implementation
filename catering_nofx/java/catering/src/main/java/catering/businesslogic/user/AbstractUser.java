@@ -9,22 +9,11 @@ import java.util.*;
 
 public abstract class AbstractUser {
 
-    private static Map<Integer, AbstractUser> loadedUsers = new HashMap<Integer, AbstractUser>();
+    private static final Map<Integer, AbstractUser> loadedUsers = new HashMap<>();
 
-    protected int id;
-    protected String username;
+    public abstract int getId();
 
-    public String getUserName() {
-        return username;
-    }
-
-    public int getId() {
-        return this.id;
-    }
-
-    public String toString() {
-        return username;
-    }
+    public abstract String getUsername();
 
     public abstract void setAll(int id, String username);
 
@@ -49,8 +38,8 @@ public abstract class AbstractUser {
     }
 
     private static AbstractUser decorateUser(AbstractUser u) {
-        if (u.id > 0) {
-            String roleQuery = "SELECT * FROM UserRoles WHERE user_id=" + u.id;
+        if (u.getId() > 0) {
+            String roleQuery = "SELECT * FROM UserRoles WHERE user_id=" + u.getId();
             PersistenceManager.executeQuery(roleQuery, new ResultHandler() {
                 @Override
                 public void handle(ResultSet rs) throws SQLException {
@@ -74,10 +63,10 @@ public abstract class AbstractUser {
                                 System.err.println("Unknown role '" + role + "'");
                         }
                     }
-                    loadedUsers.put(decoratedUser.id, decoratedUser);
+                    loadedUsers.put(decoratedUser.getId(), decoratedUser);
                 }
             });
-            return loadedUsers.get(u.id);
+            return loadedUsers.get(u.getId());
         } else
             return u;
     }
@@ -97,6 +86,6 @@ public abstract class AbstractUser {
         if (this == o) return true;
         if (!(o instanceof AbstractUser)) return false;
         AbstractUser user = (AbstractUser) o;
-        return getId() == user.getId() && Objects.equals(username, user.username);
+        return getId() == user.getId() && Objects.equals(getUsername(), user.getUsername());
     }
 }

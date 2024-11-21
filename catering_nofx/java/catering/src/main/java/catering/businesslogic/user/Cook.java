@@ -9,4 +9,9 @@ public class Cook extends Staff {
     public boolean isCook() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Cook(" + getComponent().toString() + ")";
+    }
 }
