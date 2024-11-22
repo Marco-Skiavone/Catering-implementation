@@ -33,9 +33,9 @@ public class CatERing {
         menuMgr = new MenuManager();
         recipeMgr = new RecipeManager();
         userMgr = new UserManager();
-        jobMgr = new JobManager();
         eventMgr = new EventManager();
         shiftMgr = new ShiftManager();
+        jobMgr = new JobManager();
         menuPersistence = new MenuPersistence();
         userPersistence = new UserPersistence();
         jobPersistence = new JobPersistence();

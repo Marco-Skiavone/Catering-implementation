@@ -30,7 +30,7 @@ public class EventInfo implements EventItemInfo {
     }
 
     public String toString() {
-        return name + ": " + dateStart + "-" + dateEnd + ", " + participants + " pp. (" + organizer.getUserName() + ")";
+        return name + ": " + dateStart + "-" + dateEnd + ", " + participants + " pp. (" + organizer.getUsername() + ")";
     }
 
     // STATIC METHODS FOR PERSISTENCE

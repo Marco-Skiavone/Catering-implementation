@@ -6,6 +6,7 @@ import catering.businesslogic.user.*;
 import java.time.*;
 
 public class Service {
+    private int id;
     String address;
     LocalDateTime startTime;
     LocalDateTime endTime;
@@ -17,6 +18,10 @@ public class Service {
         if (menuInUse == null) throw new IllegalArgumentException();
         this.menuInUse = menuInUse;
     }
+
+    public int getId() { return id;}
+
+    public void setId(int id) { this.id = id;}
 
     public JobsSheet getSummary() {
         return this.summary;

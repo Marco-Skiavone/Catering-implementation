@@ -6,7 +6,7 @@ import catering.businesslogic.event.EventInfo;
 import catering.businesslogic.event.ServiceInfo;
 import catering.businesslogic.menu.Menu;
 import catering.businesslogic.menu.Section;
-import catering.businesslogic.recipe.Recipe;
+import catering.businesslogic.recipe.*;
 import catering.persistence.PersistenceManager;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class TestCatERing {
             System.out.println("");
 
             System.out.println("\nTEST GET RECIPES AND INSERT ITEM IN SECTION");
-            ArrayList<Recipe> recipes = CatERing.getInstance().getRecipeManager().getRecipes();
+            ArrayList<Task> recipes = CatERing.getInstance().getRecipeManager().getRecipes();
             CatERing.getInstance().getMenuManager().insertItem(recipes.get(0), antipasti);
             CatERing.getInstance().getMenuManager().insertItem(recipes.get(1), antipasti);
             CatERing.getInstance().getMenuManager().insertItem(recipes.get(2), antipasti);

@@ -15,17 +15,17 @@ import java.util.List;
 public class MenuItem {
     private int id;
     private String description;
-    private Recipe itemRecipe;
+    private Task itemRecipe;
 
     private MenuItem() {
 
     }
 
-    public MenuItem(Recipe rec) {
+    public MenuItem(Task rec) {
         this(rec, rec.getName());
     }
 
-    public MenuItem(Recipe rec, String desc) {
+    public MenuItem(Task rec, String desc) {
         id = 0;
         itemRecipe = rec;
         description = desc;
@@ -55,11 +55,11 @@ public class MenuItem {
         this.description = description;
     }
 
-    public Recipe getItemRecipe() {
+    public Task getItemRecipe() {
         return itemRecipe;
     }
 
-    public void setItemRecipe(Recipe itemRecipe) {
+    public void setItemRecipe(Task itemRecipe) {
         this.itemRecipe = itemRecipe;
     }
 

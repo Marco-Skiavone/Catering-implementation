@@ -11,14 +11,10 @@ import java.util.*;
 public class JobManager {
     private JobsSheet currentSheet;
     private final HashSet<JobsEventReceiver> eventReceivers;
-    private final UserManager usrMgr;
-    private final ShiftManager shfMgr;
 
     public JobManager() {
         eventReceivers = new HashSet<>();
         currentSheet = null;
-        usrMgr = CatERing.getInstance().getUserManager();
-        shfMgr = CatERing.getInstance().getShiftManager();
     }
 
     public JobsSheet getCurrentSheet() {
@@ -36,7 +32,7 @@ public class JobManager {
     // --- Operation methods ---
 
     public void createJobsSheet(Service srv) {
-        AbstractUser usr = usrMgr.getCurrentUser();
+        AbstractUser usr = CatERing.getInstance().getUserManager().getCurrentUser();
         if (srv == null) throw new IllegalArgumentException();
         if (!usr.isChef())
             throw new UseCaseLogicException("Logged user is not a Chef!");
@@ -48,7 +44,7 @@ public class JobManager {
     }
 
     public void modifySheet(JobsSheet sheet) {
-        AbstractUser usr = usrMgr.getCurrentUser();
+        AbstractUser usr = CatERing.getInstance().getUserManager().getCurrentUser();
         if (sheet == null) throw new IllegalArgumentException();
         if (!usr.isChef())
             throw new UseCaseLogicException("Logged user is not a Chef!");
@@ -58,7 +54,7 @@ public class JobManager {
     }
 
     public void deleteSheet(Service srv) {
-        AbstractUser usr = usrMgr.getCurrentUser();
+        AbstractUser usr = CatERing.getInstance().getUserManager().getCurrentUser();
         if (srv == null) throw new IllegalArgumentException();
         if (!usr.isChef())
             throw new UseCaseLogicException("Logged user is not a Chef!");
@@ -109,7 +105,7 @@ public class JobManager {
     }
 
     public ShiftTable getShiftTable() {
-        return shfMgr.getShiftTable();
+        return CatERing.getInstance().getShiftManager().getShiftTable();
     }
 
     public void setWorker(Job j, AbstractUser usr) {

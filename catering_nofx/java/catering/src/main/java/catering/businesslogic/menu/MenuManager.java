@@ -2,7 +2,7 @@ package catering.businesslogic.menu;
 
 import catering.businesslogic.CatERing;
 import catering.businesslogic.UseCaseLogicException;
-import catering.businesslogic.recipe.Recipe;
+import catering.businesslogic.recipe.*;
 import catering.businesslogic.user.*;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class MenuManager {
         return sec;
     }
 
-    public MenuItem insertItem(Recipe recipe, Section sec, String desc) throws UseCaseLogicException {
+    public MenuItem insertItem(Task recipe, Section sec, String desc) throws UseCaseLogicException {
         if (this.currentMenu == null) throw new UseCaseLogicException("Menu not selected.");
         if (sec != null && this.currentMenu.getSectionPosition(sec) < 0) throw new UseCaseLogicException("Exception in insertItem.");
         MenuItem mi = this.currentMenu.addItem(recipe, sec, desc);
@@ -50,15 +50,15 @@ public class MenuManager {
         return mi;
     }
 
-    public MenuItem insertItem(Recipe recipe, Section sec) throws UseCaseLogicException {
+    public MenuItem insertItem(Task recipe, Section sec) throws UseCaseLogicException {
         return this.insertItem(recipe, sec, recipe.getName());
     }
 
-    public MenuItem insertItem(Recipe rec) throws UseCaseLogicException {
+    public MenuItem insertItem(Task rec) throws UseCaseLogicException {
         return this.insertItem(rec, null, rec.getName());
     }
 
-    public MenuItem insertItem(Recipe rec, String desc) throws UseCaseLogicException {
+    public MenuItem insertItem(Task rec, String desc) throws UseCaseLogicException {
         return this.insertItem(rec, null, desc);
     }
 

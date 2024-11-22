@@ -1,7 +1,7 @@
 package catering.businesslogic.menu;
 
 import catering.businesslogic.CatERing;
-import catering.businesslogic.recipe.Recipe;
+import catering.businesslogic.recipe.*;
 import catering.businesslogic.user.AbstractUser;
 import catering.persistence.BatchUpdateHandler;
 import catering.persistence.PersistenceManager;
@@ -144,7 +144,7 @@ public class Menu {
         return sec;
     }
 
-    public MenuItem addItem(Recipe recipe, Section sec, String desc) {
+    public MenuItem addItem(Task recipe, Section sec, String desc) {
         MenuItem mi = new MenuItem(recipe, desc);
         if (sec != null) {
             sec.addItem(mi);
