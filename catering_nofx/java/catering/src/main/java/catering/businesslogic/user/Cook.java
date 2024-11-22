@@ -12,6 +12,6 @@ public class Cook extends Staff {
 
     @Override
     public String toString() {
-        return "Cook(" + getComponent().toString() + ")";
+        return "Cook(" + super.toString() + ")";
     }
 }

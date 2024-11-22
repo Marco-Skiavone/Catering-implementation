@@ -12,6 +12,6 @@ public class Organizer extends Role {
 
     @Override
     public String toString() {
-        return "Organizer(" + getComponent().toString() + ")";
+        return "Organizer(" + super.toString() + ")";
     }
 }

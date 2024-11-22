@@ -88,4 +88,9 @@ public abstract class AbstractUser {
         AbstractUser user = (AbstractUser) o;
         return getId() == user.getId() && Objects.equals(getUsername(), user.getUsername());
     }
+
+    @Override
+    public String toString() {
+        return "<" + getId() + ", " + getUsername() + '>';
+    }
 }

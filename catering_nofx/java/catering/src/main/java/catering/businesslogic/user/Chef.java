@@ -12,6 +12,6 @@ public class Chef extends Role {
 
     @Override
     public String toString() {
-        return "Chef(" + getComponent().toString() + ")";
+        return "Chef(" + super.toString() + ")";
     }
 }

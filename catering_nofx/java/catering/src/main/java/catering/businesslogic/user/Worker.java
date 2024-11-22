@@ -45,4 +45,9 @@ public class Worker extends AbstractUser {
     public boolean isServiceStaff() {
         return false;
     }
+
+    @Override
+    public String toString() {
+        return "Worker(" + id + ", " + username + ')';
+    }
 }

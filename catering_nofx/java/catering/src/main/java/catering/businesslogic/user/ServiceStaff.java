@@ -12,6 +12,6 @@ public class ServiceStaff extends Staff {
 
     @Override
     public String toString() {
-        return "ServiceStaff(" + getComponent().toString() + ")";
+        return "ServiceStaff(" + super.toString() + ")";
     }
 }

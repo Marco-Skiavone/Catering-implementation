@@ -9,9 +9,4 @@ public class Staff extends Role {
     public boolean isStaff() {
         return true;
     }
-
-    @Override
-    public String toString() {
-        return "Staff(" + getComponent().toString() + ")";
-    }
 }
