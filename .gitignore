@@ -13,3 +13,4 @@ catering_nofx/java/catering/target/*
 
 */desktop.ini
 
+catering_nofx/java/catering/src/main/java/catering/persistence/PersistenceManager.java
