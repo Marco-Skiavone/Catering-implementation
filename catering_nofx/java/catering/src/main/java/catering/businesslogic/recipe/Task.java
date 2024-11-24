@@ -50,7 +50,7 @@ public class Task {
     // STATIC METHODS FOR PERSISTENCE
 
     public static ArrayList<Task> loadAllRecipes() {
-        String query = "SELECT * FROM Recipes";
+        String query = "SELECT * FROM Tasks";
         PersistenceManager.executeQuery(query, new ResultHandler() {
             @Override
             public void handle(ResultSet rs) throws SQLException {
@@ -88,7 +88,7 @@ public class Task {
         if (all.get(id) instanceof Recipe )
             return (Recipe) all.get(id);
         Recipe rep = new Recipe();
-        String query = "SELECT * FROM Recipes WHERE id = " + id;
+        String query = "SELECT * FROM Tasks WHERE id = " + id;
         PersistenceManager.executeQuery(query, new ResultHandler() {
             @Override
             public void handle(ResultSet rs) throws SQLException {

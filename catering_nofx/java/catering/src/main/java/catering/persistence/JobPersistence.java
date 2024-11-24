@@ -13,14 +13,14 @@ public class JobPersistence implements JobsEventReceiver {
     @Override
     public void updateJobsSheetCreated(Service srv, JobsSheet js) {
         ArrayList<Job> jobs = js.getAllJobs();
-        String insertStr = "INSERT INTO catering.Jobs (service_id, eta, portions, done, task_id) VALUES (?, ?, ?);";
+        String insertStr = "INSERT INTO catering.Jobs (service_id, eta, portions, done, task_id) VALUES (?, ?, ?, ?, ?);";
         int[] result = PersistenceManager.executeBatchUpdate(insertStr, 1, new BatchUpdateHandler() {
             @Override
             public void handleBatchItem(PreparedStatement ps, int batchCount) throws SQLException {
                 ps.setInt(1, srv.getId());
                 ps.setInt(2, jobs.get(batchCount).getEta());
                 ps.setInt(3, jobs.get(batchCount).getPortions());
-                ps.setByte(4, jobs.get(batchCount).isDone() ? (byte)1 : (byte)0);
+                ps.setInt(4, jobs.get(batchCount).isDone() ? 1 : 0);
                 ps.setInt(5, jobs.get(batchCount).getTask().getId());
             }
 
@@ -30,7 +30,7 @@ public class JobPersistence implements JobsEventReceiver {
             }
         });
 
-        if (result[0] > 0) // jobs added
+        if (result != null && result.length > 0 && result[0] > 0) // jobs added
             System.out.println("Jobs added in database.");
         else
             System.out.println("Jobs could not be added in database.");

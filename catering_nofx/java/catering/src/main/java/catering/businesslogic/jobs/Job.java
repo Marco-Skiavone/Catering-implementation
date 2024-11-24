@@ -18,8 +18,8 @@ public class Job implements Comparable<Job> {
     public Job(Task t) {
         id = t.hashCode() + this.hashCode();
         this.task = t;
-        this.eta = -1;
-        this.portions = -1;
+        this.eta = 0;
+        this.portions = 0;
         this.done = false;
         this.onShift = null;
     }
