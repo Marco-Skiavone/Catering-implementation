@@ -5,6 +5,8 @@ import catering.businesslogic.recipe.*;
 import catering.businesslogic.shift.*;
 import catering.businesslogic.user.*;
 
+import java.util.Objects;
+
 public class Job implements Comparable<Job> {
     private int id;
     private Task task;
@@ -16,7 +18,7 @@ public class Job implements Comparable<Job> {
     private AbstractShift onShift;
 
     public Job(Task t) {
-        id = t.hashCode() + this.hashCode();
+        id = Objects.hash(t, this);
         this.task = t;
         this.eta = 0;
         this.portions = 0;
@@ -104,5 +106,11 @@ public class Job implements Comparable<Job> {
 
     public void setOnShift(AbstractShift onShift) {
         this.onShift = onShift;
+    }
+
+    @Override
+    public String toString() {
+        return "Job [#" + id + ", T: " + task + ", " + eta + ", " + portions + ", " + done +
+                ", W: " + worker + ']';
     }
 }

@@ -62,4 +62,9 @@ public class JobsSheet {
     public void sortJobs(Comparator<Job> cmp) {
         jobs.sort(cmp);
     }
+
+    @Override
+    public String toString() {
+        return "JobsSheet [" + jobs.toString() + "]";
+    }
 }

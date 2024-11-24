@@ -46,7 +46,6 @@ public class Task {
         return name;
     }
 
-
     // STATIC METHODS FOR PERSISTENCE
 
     public static ArrayList<Task> loadAllRecipes() {

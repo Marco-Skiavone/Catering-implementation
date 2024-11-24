@@ -57,6 +57,10 @@ public class Service {
         return endTime;
     }
 
+    public String getAddress() { return address; }
+
+    public void setAddress(String address) { this.address = address; }
+
     public void updateChef(AbstractUser usr) {
         this.assignedChef = usr;
     }
@@ -74,5 +78,10 @@ public class Service {
     public boolean isExecuting() {
         return LocalDateTime.now().isBefore(endTime) &&
                 LocalDateTime.now().isAfter(startTime);
+    }
+
+    @Override
+    public String toString() {
+        return "Service [" + "id:" + id + ", summary: " + summary + "]";
     }
 }
