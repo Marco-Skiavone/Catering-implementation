@@ -14,7 +14,7 @@ public class JobPersistence implements JobsEventReceiver {
     public void updateJobsSheetCreated(Service srv, JobsSheet js) {
         ArrayList<Job> jobs = js.getAllJobs();
         String insertStr = "INSERT INTO catering.Jobs (service_id, eta, portions, done, task_id) VALUES (?, ?, ?, ?, ?);";
-        int[] result = PersistenceManager.executeBatchUpdate(insertStr, 1, new BatchUpdateHandler() {
+        int[] result = PersistenceManager.executeBatchUpdate(insertStr, jobs.size(), new BatchUpdateHandler() {
             @Override
             public void handleBatchItem(PreparedStatement ps, int batchCount) throws SQLException {
                 ps.setInt(1, srv.getId());

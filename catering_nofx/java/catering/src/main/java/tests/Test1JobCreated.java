@@ -14,8 +14,9 @@ public class Test1JobCreated {
             Menu m = CatERing.getInstance().getMenuManager().getAllMenus().get(2);
             System.out.println(m);
             Service s = new Service(m);
-            System.out.println(s);
             JobsSheet js = new JobsSheet(s);
+            s.setSummary(js);
+            System.out.println("Service: " + s);
 
             Random rd = new Random();
             for(MenuItem mi : m.getAllMenuItems())
@@ -27,7 +28,6 @@ public class Test1JobCreated {
                 j.setDone(rd.nextBoolean());
             }
 
-            System.out.println(js);
             System.out.println("\n\n------------------------------\n\n");
 
             new JobPersistence().updateJobsSheetCreated(s, js);

@@ -83,10 +83,10 @@ public class Task {
         return new ArrayList<>(ingredients);
     }
 
-    public static Recipe loadRecipeById(int id) {
-        if (all.get(id) instanceof Recipe )
-            return (Recipe) all.get(id);
-        Recipe rep = new Recipe();
+    public static Task loadRecipeById(int id) {
+        if (all.containsKey(id))
+            return all.get(id);
+        Task rep = new Task();
         String query = "SELECT * FROM Tasks WHERE id = " + id;
         PersistenceManager.executeQuery(query, new ResultHandler() {
             @Override
