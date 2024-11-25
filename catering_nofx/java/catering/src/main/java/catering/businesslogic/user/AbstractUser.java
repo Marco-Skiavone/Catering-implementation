@@ -44,25 +44,26 @@ public abstract class AbstractUser {
                 @Override
                 public void handle(ResultSet rs) throws SQLException {
                     AbstractUser decoratedUser = u;
-                    while (rs.next()) {
-                        // "while" used to retrieve every role of a user
-                        String role = rs.getString("role_id");
-                        switch (role.charAt(0)) {
-                            case 'c':
-                                decoratedUser = new Cook(decoratedUser);
-                                break;
-                            case 'h':
-                                decoratedUser = new Chef(decoratedUser);
-                                break;
-                            case 'o':
-                                decoratedUser = new Organizer(decoratedUser);
-                                break;
-                            case 's':
-                                decoratedUser = new ServiceStaff(decoratedUser);
-                            default:
-                                System.err.println("Unknown role '" + role + "'");
-                        }
-                    }
+                    if (rs.getRow() > 0)
+                        do {
+                            // "while" used to retrieve every role of a user
+                            String role = rs.getString("role_id");
+                            switch (role.charAt(0)) {
+                                case 'c':
+                                    decoratedUser = new Cook(decoratedUser);
+                                    break;
+                                case 'h':
+                                    decoratedUser = new Chef(decoratedUser);
+                                    break;
+                                case 'o':
+                                    decoratedUser = new Organizer(decoratedUser);
+                                    break;
+                                case 's':
+                                    decoratedUser = new ServiceStaff(decoratedUser);
+                                default:
+                                    System.err.println("Unknown role '" + role + "'");
+                            }
+                        } while (rs.next());
                     loadedUsers.put(decoratedUser.getId(), decoratedUser);
                 }
             });

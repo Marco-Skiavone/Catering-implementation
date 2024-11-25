@@ -8,13 +8,13 @@ import catering.businesslogic.user.*;
 import java.util.Objects;
 
 public class Job implements Comparable<Job> {
-    private int id;
+    private long  id;
     private Task task;
     /* Estimated Time of Arrival */
     private int eta;        /* saved as minutes */
     private int portions;
     private boolean done;
-    private int pos;
+    private int priority;
     private AbstractUser worker;
     private AbstractShift onShift;
 
@@ -25,17 +25,17 @@ public class Job implements Comparable<Job> {
         this.portions = 0;
         this.done = false;
         this.onShift = null;
-        this.pos = -1;
+        this.priority = -1;
     }
 
-    public Job(Task t, int position) {
+    public Job(Task t, int priority) {
         id = Objects.hash(t, this);
         this.task = t;
         this.eta = 0;
         this.portions = 0;
         this.done = false;
         this.onShift = null;
-        this.pos = position;
+        this.priority = priority;
     }
 
     public void modifyJob(Integer eta, Integer portions, Boolean done) {
@@ -70,7 +70,7 @@ public class Job implements Comparable<Job> {
         this.task = task;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -102,12 +102,12 @@ public class Job implements Comparable<Job> {
         this.done = done;
     }
 
-    public int getPos() {
-        return pos;
+    public int getPriority() {
+        return priority;
     }
 
-    public void setPos(int pos) {
-        this.pos = pos;
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
     public AbstractUser getWorker() {

@@ -34,5 +34,4 @@ public class UserManager {
         if (!eventReceivers.remove(er))
             throw new IllegalArgumentException("Receiver does not exist!");
     }
-
 }

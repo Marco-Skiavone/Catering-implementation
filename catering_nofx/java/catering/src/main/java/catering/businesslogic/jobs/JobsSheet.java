@@ -2,7 +2,6 @@ package catering.businesslogic.jobs;
 
 import catering.businesslogic.menu.*;
 import catering.businesslogic.recipe.*;
-import catering.businesslogic.user.*;
 import catering.businesslogic.event.*;
 import java.util.*;
 
@@ -15,7 +14,10 @@ public class JobsSheet {
         if (service != null) {
             this.service = service;
             for (MenuItem elem : service.getMenu().getAllMenuItems()) {
-                jobs.add(new Job(elem.getItemRecipe(), jobs.get(jobs.size()-1).getPos() +1));
+                if (jobs.size() > 0)
+                    jobs.add(new Job(elem.getItemRecipe(), jobs.get(jobs.size() -1).getPriority() +1));
+                else
+                    jobs.add(new Job(elem.getItemRecipe(), 0));
                 for (Preparation p : elem.getItemRecipe().getIngredients())
                     jobs.add(new Job(p, jobs.size()));
             }
@@ -40,7 +42,7 @@ public class JobsSheet {
         if (eta != null || port != null || done != null)
             j.modifyJob(eta, port, done);
         jobs.add(j);
-        j.setPos(jobs.get(jobs.size()-1).getPos() +1);
+        j.setPriority(jobs.get(jobs.size()-1).getPriority() +1);
         return j;
     }
 
@@ -62,11 +64,14 @@ public class JobsSheet {
 
     public void sortJobs(Comparator<Job> cmp) {
         jobs.sort(cmp);
-        jobs.forEach(el -> el.setPos(jobs.indexOf(el)));    // update pos for db!
+        jobs.forEach(el -> el.setPriority(jobs.indexOf(el)));    // update pos for db!
     }
 
     @Override
     public String toString() {
-        return "JobsSheet [" + jobs.toString() + "]";
+        StringBuilder jobsStr = new StringBuilder("\n");
+        for (Job j : jobs)
+            jobsStr.append("\t").append(j.toString()).append("\n");
+        return "JobsSheet [" + jobsStr + "]";
     }
 }

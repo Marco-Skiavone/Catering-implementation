@@ -14,6 +14,16 @@ public class Service {
     JobsSheet summary;
     Menu menuInUse;
 
+    public Service() {
+        this.id = 0;
+        this.address = "";
+        this.startTime = null;
+        this.endTime = null;
+        this.assignedChef = null;
+        this.summary = null;
+        this.menuInUse = null;
+    }
+
     public Service(Menu menuInUse) {
         if (menuInUse == null) throw new IllegalArgumentException();
         this.menuInUse = menuInUse;

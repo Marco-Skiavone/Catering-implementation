@@ -40,7 +40,7 @@ public class JobManager {
             throw new SheetException("User is not assigned to the service!");
         this.currentSheet = new JobsSheet(srv);
         srv.setSummary(this.currentSheet);
-        notifyJobsSheetCreated(srv, this.currentSheet);
+        notifyJobsSheetCreated(this.currentSheet);
     }
 
     public void modifySheet(JobsSheet sheet) {
@@ -65,7 +65,7 @@ public class JobManager {
         JobsSheet sheet = srv.removeSummary();
         if (sheet == null) throw new NullPointerException();
         sheet.removeAllJobs();
-        notifyJobsSheetDeleted(srv);
+        notifyJobsSheetDeleted(sheet);
     }
 
     public Job insertJob(Task t) {
@@ -90,7 +90,7 @@ public class JobManager {
         if (this.currentSheet == null) throw new SheetException("Sheet not selected!");
         if (!j.isDone()) {
             j.modifyJob(eta, port, done);
-            notifyJobModified(currentSheet, j);
+            notifyJobModified(j);
         } else throw new SheetException("Job is already done!");
         return j;
     }
@@ -100,7 +100,7 @@ public class JobManager {
         if (this.currentSheet == null) throw new SheetException("Sheet not selected!");
         if (!j.isDone()) {
             currentSheet.removeJob(j);
-            notifyJobDeleted(currentSheet, j);
+            notifyJobDeleted(j);
         } else throw new SheetException("Job is already done!");
     }
 
@@ -116,7 +116,7 @@ public class JobManager {
         // NB: in the previous lines, "usr.isCook()" could be "usr.isStaff()"
 
         j.setWorker(usr);   // It can throw an Exception.
-        notifyJobAssigned(currentSheet, j);
+        notifyJobAssigned(j);
     }
 
     public void removeAssignment(Job j) {
@@ -125,14 +125,13 @@ public class JobManager {
         if (j.isDone() || !j.isAssigned())
             throw new UseCaseLogicException("Exception inside setWorker method!");
         AbstractUser usr = j.removeAssignment();
-        notifyAssignmentDeleted(j, usr);
+        notifyAssignmentDeleted(j);
     }
 
     public void sortJobsSheet(Comparator<Job> cmp) {
         if (cmp == null) throw new IllegalArgumentException();
         if (this.currentSheet == null) throw new SheetException("Sheet not selected!");
         this.currentSheet.sortJobs(cmp);
-        notifyJobsSheetRearranged(currentSheet);
     }
 
     // --- Event sender Methods ---
@@ -153,35 +152,31 @@ public class JobManager {
             throw new IllegalArgumentException("Receiver does not exist!");
     }
 
-    private void notifyJobsSheetCreated(Service srv, JobsSheet js) {
-        eventReceivers.forEach(er -> er.updateJobsSheetCreated(srv, js));
+    private void notifyJobsSheetCreated(JobsSheet js) {
+        eventReceivers.forEach(er -> er.updateJobsSheetCreated(js));
     }
 
-    private void notifyJobsSheetDeleted(Service srv) {
-        eventReceivers.forEach(er -> er.updateJobsSheetDeleted(srv));
+    private void notifyJobsSheetDeleted(JobsSheet js) {
+        eventReceivers.forEach(er -> er.updateJobsSheetDeleted(js));
     }
 
     private void notifyJobAdded(JobsSheet js, Job j) {
-        eventReceivers.forEach(er -> er.updateJobsAdded(js, j));
+        eventReceivers.forEach(er -> er.updateJobAdded(js, j));
     }
 
-    private void notifyJobModified(JobsSheet js, Job j) {
-        eventReceivers.forEach(er -> er.updateJobModified(js, j));
+    private void notifyJobModified(Job j) {
+        eventReceivers.forEach(er -> er.updateJobModified(j));
     }
 
-    private void notifyJobDeleted(JobsSheet js, Job j) {
-        eventReceivers.forEach(er -> er.updateJobDeleted(js, j));
+    private void notifyJobDeleted(Job j) {
+        eventReceivers.forEach(er -> er.updateJobDeleted(j));
     }
 
-    private void notifyJobAssigned(JobsSheet js, Job j) {
-        eventReceivers.forEach(er -> er.updateJobAssigned(js, j));
+    private void notifyJobAssigned(Job j) {
+        eventReceivers.forEach(er -> er.updateJobAssigned(j));
     }
 
-    private void notifyAssignmentDeleted(Job j, AbstractUser usr) {
-        eventReceivers.forEach(er -> er.updateAssignmentDeleted(j, usr));
-    }
-
-    private void notifyJobsSheetRearranged(JobsSheet js) {
-        eventReceivers.forEach(er -> er.updateJobsSheetRearranged(js));
+    private void notifyAssignmentDeleted(Job j) {
+        eventReceivers.forEach(er -> er.updateAssignmentDeleted(j));
     }
 }
