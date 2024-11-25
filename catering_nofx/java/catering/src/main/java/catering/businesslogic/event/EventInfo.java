@@ -12,7 +12,7 @@ import catering.persistence.ResultHandler;
 
 public class EventInfo implements EventItemInfo {
     private int id;
-    private String name;
+    private final String name;
     private Date dateStart;
     private Date dateEnd;
     private int participants;
