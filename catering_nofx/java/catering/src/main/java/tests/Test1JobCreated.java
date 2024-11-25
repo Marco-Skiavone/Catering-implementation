@@ -14,6 +14,7 @@ public class Test1JobCreated {
             Menu m = CatERing.getInstance().getMenuManager().getAllMenus().get(2);
             System.out.println(m);
             Service s = new Service(m);
+            s.setId(12);
             JobsSheet js = new JobsSheet(s);
             s.setSummary(js);
             System.out.println("Service: " + s);
@@ -23,7 +24,7 @@ public class Test1JobCreated {
                 js.addJob(mi.getItemRecipe());
 
             for (Job j : js.getAllJobs()) {
-                j.setEta(120); // min
+                j.setEta(120);  // min
                 j.setPortions(50);
                 j.setDone(rd.nextBoolean());
             }
@@ -31,6 +32,9 @@ public class Test1JobCreated {
             System.out.println("\n\n------------------------------\n\n");
 
             new JobPersistence().updateJobsSheetCreated(s, js);
+            //new JobPersistence().updateJobsSheetDeleted(s);
+            System.out.println("\n\n------------------------------\n\n");
+
 
             System.out.println("\nTEST DEFINE SECTION");
         } catch (UseCaseLogicException e) {

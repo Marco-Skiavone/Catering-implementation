@@ -385,7 +385,7 @@ public class Menu {
     }
 
     public static void deleteMenu(Menu m) {
-        // delete sections
+        // delete sections - dis0neste -
         String delSec = "DELETE FROM MenuSections WHERE menu_id = " + m.id;
         PersistenceManager.executeUpdate(delSec);
 
@@ -396,7 +396,6 @@ public class Menu {
         // delete features
         String delFeat = "DELETE FROM MenuFeatures WHERE menu_id = " + m.getId();
         PersistenceManager.executeUpdate(delFeat);
-
 
         String del = "DELETE FROM Menus WHERE id = " + m.getId();
         PersistenceManager.executeUpdate(del);

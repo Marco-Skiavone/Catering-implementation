@@ -15,9 +15,9 @@ public class JobsSheet {
         if (service != null) {
             this.service = service;
             for (MenuItem elem : service.getMenu().getAllMenuItems()) {
-                jobs.add(new Job(elem.getItemRecipe()));
+                jobs.add(new Job(elem.getItemRecipe(), jobs.get(jobs.size()-1).getPos() +1));
                 for (Preparation p : elem.getItemRecipe().getIngredients())
-                    jobs.add(new Job(p));
+                    jobs.add(new Job(p, jobs.size()));
             }
         } else
             throw new IllegalArgumentException();
@@ -40,6 +40,7 @@ public class JobsSheet {
         if (eta != null || port != null || done != null)
             j.modifyJob(eta, port, done);
         jobs.add(j);
+        j.setPos(jobs.get(jobs.size()-1).getPos() +1);
         return j;
     }
 
@@ -61,6 +62,7 @@ public class JobsSheet {
 
     public void sortJobs(Comparator<Job> cmp) {
         jobs.sort(cmp);
+        jobs.forEach(el -> el.setPos(jobs.indexOf(el)));    // update pos for db!
     }
 
     @Override
