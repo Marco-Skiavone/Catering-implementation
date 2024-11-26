@@ -9,21 +9,17 @@ import catering.businesslogic.recipe.Task;
 import catering.businesslogic.shift.AbstractShift;
 import catering.businesslogic.shift.KitchenShift;
 import catering.businesslogic.user.AbstractUser;
-import catering.businesslogic.user.Staff;
 
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Random;
 
-public class Test2c2SetWorker {
+public class Test2c2aRemoveAssignment {
     public static void main(String[] args) {
         try {
             Random rand = new Random();
             CatERing.getInstance().getUserManager().fakeLogin("Marinella");     // chef
-            System.out.println(CatERing.getInstance().getUserManager().getCurrentUser());
-            System.out.println("---------------------\n");
             Menu m = CatERing.getInstance().getMenuManager().getAllMenus().get(1);
             Service srv = new Service(m);
             srv.setId(rand.nextInt(143) + 43);
@@ -58,9 +54,9 @@ public class Test2c2SetWorker {
             CatERing.getInstance().getJobManager().setWorker(js.getAllJobs().get(2), guido);   // "Bigné farciti"
             System.out.println("TEST setWorker (2c.2): " + js);
 
-            // step 2c.2
-            System.out.println("TEST setWorker err (2c.2): " + js);
-            CatERing.getInstance().getJobManager().setWorker(js.getAllJobs().get(2), antonietta);   // "Bigné farciti"
+            // step 2c.2a
+            CatERing.getInstance().getJobManager().removeAssignment(js.getAllJobs().get(2));   // "Bigné farciti"
+            System.out.println("TEST removeAssignment (2c.2a): " + js);
 
             System.out.println("---------------------\nOK.");
         } catch (UseCaseLogicException e) {
