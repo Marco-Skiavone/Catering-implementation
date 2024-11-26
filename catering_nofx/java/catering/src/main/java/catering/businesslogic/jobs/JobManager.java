@@ -115,7 +115,6 @@ public class JobManager {
         if (j.isDone() || j.isAssigned() || j.getOnShift() == null || !usr.isCook())
             throw new UseCaseLogicException("Exception inside setWorker method!");
         // NB: in the previous lines, "usr.isCook()" could be "usr.isStaff()"
-
         j.setWorker(usr);   // It can throw an Exception.
         notifyJobAssigned(j);
     }
