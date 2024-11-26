@@ -23,14 +23,14 @@ public class Test2bRemoveJob {
 
             ArrayList<Job> jobs = js.getAllJobs();
             Job elem = jobs.get(2);
-            System.out.println("Removing: " + elem + " from " + js);
+            System.out.println("Removing: " + elem + " from\n" + js);
             // step 2b
             CatERing.getInstance().getJobManager().removeJob(elem);
             System.out.println("JobsSheet after: " + js);
             if (js.getAllJobs().contains(elem))
                 throw new RuntimeException("TEST FAILED: " + elem + " still in JobsSheet.");
             else
-                System.out.println("TEST OK.");
+                System.out.println("---------------------\nTEST OK.");
         } catch (UseCaseLogicException e) {
             System.err.println("Logic error in use case: " + e.getMessage());
         } catch (Exception e) {
