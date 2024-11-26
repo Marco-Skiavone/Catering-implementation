@@ -129,6 +129,14 @@ public class Job implements Comparable<Job> {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Job)) return false;
+        Job job = (Job) o;
+        return this.id == job.id;
+    }
+
+    @Override
     public String toString() {
         return "Job [#" + id + ", T: " + task + ", " + eta + ", " + portions + ", " + done +
                 ", W: " + worker + ']';

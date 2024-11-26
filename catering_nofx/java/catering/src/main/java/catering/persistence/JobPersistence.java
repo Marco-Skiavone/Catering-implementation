@@ -67,7 +67,7 @@ public class JobPersistence implements JobsEventReceiver {
 
     @Override
     public void updateJobDeleted(Job j) {
-        String insertJob = "DELETE catering.Jobs WHERE = " + j.getId() + ";";
+        String insertJob = "DELETE catering.Jobs WHERE id = " + ((int)j.getId()) + ";";
         if (PersistenceManager.executeUpdate(insertJob) == 1)
             System.out.println("PERSISTENCE: Job " + j + " deleted.");
         else System.err.println("PERSISTENCE: Job " + j + " could not be deleted.");
