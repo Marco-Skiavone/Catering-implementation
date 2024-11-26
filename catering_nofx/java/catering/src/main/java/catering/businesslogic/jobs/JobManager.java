@@ -64,6 +64,7 @@ public class JobManager {
             throw new SheetException("Service is executing!");
         JobsSheet sheet = srv.removeSummary();
         if (sheet == null) throw new NullPointerException();
+        if (currentSheet == sheet) currentSheet = null;
         sheet.removeAllJobs();
         notifyJobsSheetDeleted(sheet);
     }
