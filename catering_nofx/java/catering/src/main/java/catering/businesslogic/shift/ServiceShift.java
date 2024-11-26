@@ -3,6 +3,7 @@ package catering.businesslogic.shift;
 import catering.businesslogic.event.ServiceInfo;
 
 import java.time.*;
+import java.util.*;
 
 public class ServiceShift extends AbstractShift {
     private final ServiceInfo service;
@@ -16,6 +17,7 @@ public class ServiceShift extends AbstractShift {
         this.service = srv;
         this.earlyTime = earlyTime;
         this.postTime = postTime;
+        super.availableWorkers = new ArrayList<>();
     }
 
     public ServiceInfo getService() {
@@ -41,7 +43,8 @@ public class ServiceShift extends AbstractShift {
 
     @Override
     public String toString() {
-        return "ServiceShift (#" + id + "', s: " + start.toString() +
-                ", end: " + end.toString() + ", service: " + service.toString() + ')';
+        return "ServiceShift (#" + id + "')";
+                // + ", s: " + start.toString() + ", end: " + end.toString() +
+                //", service: " + service.toString() + ')';
     }
 }

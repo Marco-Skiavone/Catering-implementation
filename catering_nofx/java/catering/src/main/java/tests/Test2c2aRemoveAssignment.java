@@ -1,19 +1,14 @@
 package tests;
 
-import catering.businesslogic.CatERing;
-import catering.businesslogic.UseCaseLogicException;
-import catering.businesslogic.event.Service;
-import catering.businesslogic.jobs.JobsSheet;
-import catering.businesslogic.menu.Menu;
-import catering.businesslogic.recipe.Task;
-import catering.businesslogic.shift.AbstractShift;
-import catering.businesslogic.shift.KitchenShift;
-import catering.businesslogic.user.AbstractUser;
-
-import java.time.LocalDateTime;
-import java.time.Period;
-import java.util.ArrayList;
-import java.util.Random;
+import catering.businesslogic.*;
+import catering.businesslogic.event.*;
+import catering.businesslogic.jobs.*;
+import catering.businesslogic.menu.*;
+import catering.businesslogic.recipe.*;
+import catering.businesslogic.shift.*;
+import catering.businesslogic.user.*;
+import java.time.*;
+import java.util.*;
 
 public class Test2c2aRemoveAssignment {
     public static void main(String[] args) {
@@ -24,14 +19,11 @@ public class Test2c2aRemoveAssignment {
             Service srv = new Service(m);
             srv.setId(rand.nextInt(143) + 43);
             srv.updateChef(CatERing.getInstance().getUserManager().getCurrentUser());
-            // creation made only to proceed with testing
             CatERing.getInstance().getJobManager().createJobsSheet(srv);
 
             // step 1a
             CatERing.getInstance().getJobManager().modifySheet(srv.getSummary());
-            // previous line makes the sheet modifiable
             JobsSheet js = CatERing.getInstance().getJobManager().getCurrentSheet();
-
             // step 2
             CatERing.getInstance().getJobManager().insertJob(Task.loadRecipeById(18)); // "sorbetto limone"
             System.out.println("---------------------");
@@ -44,7 +36,7 @@ public class Test2c2aRemoveAssignment {
             js.getAllJobs().get(2).setOnShift(shift);
 
             //set cookers Guido and Antonietta available on shift
-            ArrayList<AbstractUser> cookers = new ArrayList<AbstractUser>();
+            ArrayList<AbstractUser> cookers = new ArrayList<>();
             AbstractUser guido = AbstractUser.loadUser("Guido");
             cookers.add(guido);
             AbstractUser antonietta = AbstractUser.loadUser("Antonietta");
@@ -52,7 +44,6 @@ public class Test2c2aRemoveAssignment {
 
             // step 2c.2
             CatERing.getInstance().getJobManager().setWorker(js.getAllJobs().get(2), guido);   // "Bigné farciti"
-            System.out.println("TEST setWorker (2c.2): " + js);
 
             // step 2c.2a
             CatERing.getInstance().getJobManager().removeAssignment(js.getAllJobs().get(2));   // "Bigné farciti"

@@ -1,13 +1,11 @@
 package tests;
 
-import catering.businesslogic.CatERing;
 import catering.businesslogic.*;
 import catering.businesslogic.event.*;
 import catering.businesslogic.menu.*;
-
 import java.util.*;
 
-public class Test2cGetShiftTable {
+public class Test2c1GetShiftTable {
     public static void main(String[] args) {
         try {
             Random rand  = new Random();
@@ -21,8 +19,8 @@ public class Test2cGetShiftTable {
             CatERing.getInstance().getJobManager().createJobsSheet(srv);
             System.out.println("---------------------\n");
 
-            // step 2c
-            //System.out.println(CatERing.getInstance().getJobManager().getShiftTable());
+            // step 2c.1
+            System.out.println(CatERing.getInstance().getJobManager().getShiftTable());
         } catch (UseCaseLogicException e) {
             System.err.println("Logic error in use case: " + e.getMessage());
         } catch (Exception e) {

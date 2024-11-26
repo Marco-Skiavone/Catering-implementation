@@ -29,11 +29,15 @@ public class ShiftTable {
             throw new RuntimeException("Shift not found");
     }
 
+    public ArrayList<AbstractShift> getShiftList() {
+        return new ArrayList<>(shiftList);
+    }
+
     @Override
     public String toString() {
         StringBuilder shiftStr = new StringBuilder("\n");
         for (AbstractShift as : shiftList)
             shiftStr.append("\t").append(as.toString()).append("\n");
-        return "ShiftTable [\n" + shiftStr + "]";
+        return "ShiftTable [" + shiftStr + "]";
     }
 }

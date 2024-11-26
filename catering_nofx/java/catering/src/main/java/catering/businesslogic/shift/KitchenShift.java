@@ -1,6 +1,7 @@
 package catering.businesslogic.shift;
 
 import java.time.*;
+import java.util.*;
 
 public class KitchenShift extends AbstractShift {
     private String location;
@@ -10,6 +11,7 @@ public class KitchenShift extends AbstractShift {
         super.end = end;
         super.daysToRetire = daysToRet;
         this.location = location;   // can be null
+        super.availableWorkers = new ArrayList<>();
     }
 
     public String getLocation() {

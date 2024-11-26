@@ -1,5 +1,8 @@
 package catering.businesslogic.shift;
 
+import catering.persistence.*;
+import java.sql.*;
+import java.time.*;
 import java.util.*;
 
 public class ShiftManager {
@@ -14,6 +17,7 @@ public class ShiftManager {
     // --- Operation methods ---
 
     public ShiftTable getShiftTable() {
+        updateFakeShiftTable();
         return shiftTable;
     }
 
@@ -27,6 +31,31 @@ public class ShiftManager {
         if (shift == null)
             throw new NullPointerException("Shift cannot be null");
         shiftTable.removeShift(shift);
+    }
+
+    public ArrayList<AbstractShift> getShifts() {
+        return new ArrayList<>(shiftTable.getShiftList());
+    }
+
+    private void updateFakeShiftTable() {
+        String queryStr = "SELECT * FROM catering.Shifts";
+        PersistenceManager.executeQuery(queryStr, new ResultHandler() {
+            @Override
+            public void handle(ResultSet rs) throws SQLException {
+                AbstractShift as;
+                if (rs.getString("type").equals("c")) {
+                    as = new KitchenShift(
+                            LocalDateTime.of(rs.getDate("start").toLocalDate(),
+                                    LocalTime.now()),
+                            LocalDateTime.of(rs.getDate("end").toLocalDate(),
+                                    LocalTime.now()),
+                            Period.ZERO, "Terabithia");
+                } else
+                    as = new ServiceShift(null, 1580L,200L, Period.ZERO);
+                as.setId(rs.getInt("id"));
+                addShift(as);
+            }
+        });
     }
 
     // --- Event sender Methods ---
