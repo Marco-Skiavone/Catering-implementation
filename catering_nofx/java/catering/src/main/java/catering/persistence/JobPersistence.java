@@ -58,7 +58,7 @@ public class JobPersistence implements JobsEventReceiver {
         String insertJob = "UPDATE catering.Jobs SET eta = " + j.getEta() +
                 ", portions = " + j.getPortions() +
                 ", done = " + j.isDone() +
-                ", onShift = " + j.getOnShift() +
+                ", shift_id = " + j.getOnShift() +
                 " WHERE id = " + j.getId() + ";";
         if (PersistenceManager.executeUpdate(insertJob) == 1)
             System.out.println("PERSISTENCE: Job " + j + " modified.");
