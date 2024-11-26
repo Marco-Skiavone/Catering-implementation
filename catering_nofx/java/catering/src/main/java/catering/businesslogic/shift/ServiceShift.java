@@ -38,4 +38,10 @@ public class ServiceShift extends AbstractShift {
     public void setPostTime(Long postTime) {
         this.postTime = postTime;
     }
+
+    @Override
+    public String toString() {
+        return "ServiceShift (#" + id + "', s: " + start.toString() +
+                ", end: " + end.toString() + ", service: " + service.toString() + ')';
+    }
 }

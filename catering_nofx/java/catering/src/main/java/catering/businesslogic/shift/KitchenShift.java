@@ -20,4 +20,9 @@ public class KitchenShift extends AbstractShift {
         this.location = location;
     }
 
+    @Override
+    public String toString() {
+        return "KitchenShift (#" + id + ", @: '" + location + "', s: " + start +
+                ", end: " + end + ", availableWorkers: " + availableWorkers.toString() + ')';
+    }
 }

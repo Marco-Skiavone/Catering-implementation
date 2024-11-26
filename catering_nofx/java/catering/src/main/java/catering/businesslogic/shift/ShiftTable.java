@@ -1,11 +1,10 @@
 package catering.businesslogic.shift;
 
-import catering.businesslogic.*;
 import java.util.*;
 
 /** Singleton class */
 public class ShiftTable {
-    private ArrayList<AbstractShift> shiftList;
+    private final ArrayList<AbstractShift> shiftList;
     private static ShiftTable shiftTable = null;
 
     private ShiftTable() {
@@ -19,10 +18,22 @@ public class ShiftTable {
         return shiftTable;
     }
 
+    public void addShift(AbstractShift shift) {
+        // not in past UC's. Still to implement
+        shiftList.add(shift);
+    }
 
+    public void removeShift(AbstractShift shift) {
+        // not in past UC's. Still to implement
+        if (!shiftList.remove(shift))
+            throw new RuntimeException("Shift not found");
+    }
 
     @Override
     public String toString() {
-        return "ShiftTable{}";
+        StringBuilder shiftStr = new StringBuilder("\n");
+        for (AbstractShift as : shiftList)
+            shiftStr.append("\t").append(as.toString()).append("\n");
+        return "ShiftTable [\n" + shiftStr + "]";
     }
 }

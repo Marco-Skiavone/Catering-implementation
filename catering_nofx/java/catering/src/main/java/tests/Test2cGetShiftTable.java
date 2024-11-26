@@ -12,7 +12,7 @@ public class Test2cGetShiftTable {
         try {
             Random rand  = new Random();
             CatERing.getInstance().getUserManager().fakeLogin("Marinella");     // chef
-            Menu m = CatERing.getInstance().getMenuManager().getAllMenus().get(1);
+            Menu m = CatERing.getInstance().getMenuManager().getAllMenus().get(3);
             Service srv = new Service(m);
             srv.setId(rand.nextInt(100) + 1);
             srv.updateChef(CatERing.getInstance().getUserManager().getCurrentUser());
