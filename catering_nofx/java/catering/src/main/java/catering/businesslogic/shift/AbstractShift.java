@@ -15,7 +15,7 @@ public abstract class AbstractShift {
     protected LocalDateTime end;
     protected Period daysToRetire;
     protected HashMap<Integer, AbstractShift> availabilityGroup;
-    protected ArrayList<Staff> availableWorkers;
+    protected ArrayList<AbstractUser> availableWorkers;
 
     public abstract String getLocation();
 
@@ -63,7 +63,7 @@ public abstract class AbstractShift {
         this.availabilityGroup = availabilityGroup;
     }
 
-    public void setAvailableWorkers(ArrayList<Staff> availableWorkers) {
+    public void setAvailableWorkers(ArrayList<AbstractUser> availableWorkers) {
         this.availableWorkers = availableWorkers;
     }
 
