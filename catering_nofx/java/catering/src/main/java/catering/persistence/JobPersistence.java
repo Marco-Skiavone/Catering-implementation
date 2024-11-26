@@ -1,7 +1,6 @@
 package catering.persistence;
 
 import catering.businesslogic.jobs.*;
-
 import java.sql.*;
 import java.util.*;
 
@@ -49,8 +48,8 @@ public class JobPersistence implements JobsEventReceiver {
                 ", " + j.isDone() +
                 ", " + j.getTask().getId() + ");";
         if (PersistenceManager.executeUpdate(insertJob) > 0)
-            System.out.println("PERSISTENCE: Job " + j + " added.");
-        else System.err.println("PERSISTENCE: Job " + j + " could not be added.");
+            System.out.println("PERSISTENCE: " + j + " added.");
+        else System.err.println("PERSISTENCE: " + j + " could not be added.");
     }
 
     @Override
@@ -61,16 +60,16 @@ public class JobPersistence implements JobsEventReceiver {
                 ", shift_id = " + j.getOnShift() +
                 " WHERE id = " + j.getId() + ";";
         if (PersistenceManager.executeUpdate(insertJob) == 1)
-            System.out.println("PERSISTENCE: Job " + j + " modified.");
-        else System.err.println("PERSISTENCE: Job " + j + " could not be modified.");
+            System.out.println("PERSISTENCE: " + j + " modified.");
+        else System.err.println("PERSISTENCE: " + j + " could not be modified.");
     }
 
     @Override
     public void updateJobDeleted(Job j) {
         String insertJob = "DELETE FROM catering.Jobs WHERE id = " + j.getId() + ";";
         if (PersistenceManager.executeUpdate(insertJob) == 1)
-            System.out.println("PERSISTENCE: Job " + j + " deleted.");
-        else System.err.println("PERSISTENCE: Job " + j + " could not be deleted.");
+            System.out.println("PERSISTENCE: " + j + " deleted.");
+        else System.err.println("PERSISTENCE: " + j + " could not be deleted.");
     }
 
     @Override
@@ -78,8 +77,8 @@ public class JobPersistence implements JobsEventReceiver {
         String insertJob = "UPDATE catering.Jobs SET worker_id = " + j.getWorker().getId() +
                 " WHERE id = " + j.getId() + ";";
         if (PersistenceManager.executeUpdate(insertJob) > 0)
-            System.out.println("PERSISTENCE: Job " + j + " modified.");
-        else System.err.println("PERSISTENCE: Job " + j + " could not be modified.");
+            System.out.println("PERSISTENCE: " + j + " modified.");
+        else System.err.println("PERSISTENCE: " + j + " could not be modified.");
     }
 
     @Override
@@ -87,7 +86,7 @@ public class JobPersistence implements JobsEventReceiver {
         String insertJob = "UPDATE catering.Jobs SET worker_id = NULL" +
                 " WHERE id = " + j.getId() + ";";
         if (PersistenceManager.executeUpdate(insertJob) == 1)
-            System.out.println("PERSISTENCE: Job " + j + " modified.");
-        else System.err.println("PERSISTENCE: Job " + j + " could not be modified.");
+            System.out.println("PERSISTENCE: " + j + " modified.");
+        else System.err.println("PERSISTENCE: " + j + " could not be modified.");
     }
 }
