@@ -49,7 +49,11 @@ public class Test2c2SetWorker {
 
             // step 2c.2 - Error check
             System.out.println("TEST setWorker err (2c.2): " + js);
-            CatERing.getInstance().getJobManager().setWorker(js.getAllJobs().get(2), antonietta);   // "Bigné farciti"
+            try {
+                CatERing.getInstance().getJobManager().setWorker(js.getAllJobs().get(2), antonietta);   // "Bigné farciti"
+            } catch (UseCaseLogicException ucle) {
+                System.out.println("Error successfully thrown!");
+            }
 
             System.out.println("---------------------\nOK.");
         } catch (UseCaseLogicException e) {
