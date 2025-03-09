@@ -11,8 +11,8 @@ I documenti prodotti, limitatamente ai requisiti per la consegna del progetto, s
 - SSD (System Sequence Diagrams)
  
 **Progettazione:**
-- DCD (Domain Class Diagrams)
-- DSD (Domain Sequence Diagram)
+- DCD (Detailed Class Diagram)
+- DSD (Detailed Sequence Diagram)
 
 **Implementazione:**
 - Codice di Implementazione
