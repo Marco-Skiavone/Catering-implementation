@@ -8,7 +8,7 @@ I documenti prodotti, limitatamente ai requisiti per la consegna del progetto, s
 - Uc dettagliato
 - Contratti
 - Modello di Dominio
-- SSD (Sequential State Diagrams)
+- SSD (System Sequence Diagrams)
  
 **Progettazione:**
 - DCD (Domain Class Diagrams)
